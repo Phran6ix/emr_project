@@ -1,50 +1,63 @@
 const bcrypt = require('bcrypt');
 const Mongoose = require('mongoose');
 
-const staffSchema = Mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: [true, 'kindly provide staff username'],
-  },
+const staffSchema = Mongoose.Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: [true, 'kindly provide staff username'],
+    },
 
-  password: {
-    type: String,
-    required: [true, 'kindly provide staff username'],
-  },
+    password: {
+      type: String,
+      required: [true, 'kindly provide staff username'],
+    },
 
-  role: {
-    type: String,
-    enum: [
-      'admin',
-      'receptionist',
-      'doctor',
-      'pharmacist',
-      'cashier',
-      'xray',
-      'lab',
-    ],
-    required: [true, 'kindly provide staff role'],
-  },
+    role: {
+      type: String,
+      enum: [
+        'admin',
+        'receptionist',
+        'doctor',
+        'pharmacist',
+        'cashier',
+        'xray',
+        'lab',
+      ],
+      required: [true, 'kindly provide staff role'],
+    },
 
-  fullName: {
-    type: String,
-    required: true,
-  },
+    fullName: {
+      type: String,
+      required: true,
+    },
 
-  status: {
-    type: Boolean,
-    default: true,
-  },
+    status: {
+      type: Boolean,
+      default: true,
+    },
 
-  clockIn: {
-    type: Date,
-  },
+    clockIn: {
+      type: Date,
+    },
 
-  clockOut: {
-    type: Date,
+    clockOut: {
+      type: Date,
+    },
   },
-});
+  {
+    timestamps: true,
+
+    toObject: {
+      virtuals: true,
+    },
+
+    toJSON: {
+      virtuals: true,
+    },
+  }
+);
 staffSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   this.password = await bcrypt.hash(this.password, 10);
