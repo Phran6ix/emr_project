@@ -23,8 +23,20 @@ function dumbStaff() {
     updatedAt: this.updatedAt,
   };
 }
+
+function dumbPatient() {
+  return {
+    patient_id: this._id,
+    name: this.name,
+    dob: this.dob,
+    phoneNumber: this.phoneNumber,
+    email: this.email,
+    PId: this.PId,
+  };
+}
 module.exports = {
   verifyToken,
   signToken,
   dumbStaff,
+  dumbPatient,
 };

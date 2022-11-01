@@ -1,7 +1,6 @@
 const Staff = require('../database/models/staff.model');
 const X = require('../exceptions/operational.exception');
-const { signToken } = require('../utils/helper');
-const serverResponse = require('../utils/response');
+const { verifyToken } = require('../utils/helper');
 
 module.exports = class AuthService {
   static async protectRoute(req, res, next) {
@@ -15,8 +14,7 @@ module.exports = class AuthService {
       }
       if (!token)
         throw new X('you are not logged in , kindly login to access', 401);
-
-      const payload = await verify(token, process.env.JWT_SECRET);
+      const payload = await verifyToken(token, process.env.JWT_SECRET);
       const user = await Staff.findById(payload.id, {
         _id: true,
         role: true,
@@ -48,15 +46,16 @@ module.exports = class AuthService {
     }
   }
 
-  static async restrictLogin(...roles) {
+  static RestrictAccess(...roles) {
     return (req, res, next) => {
-      if (roles.includes(req.user.role))
+      if (!roles.includes(req.user.role))
         return next(
           new X(
             `Access restricted, you're not allowed to perform this action`,
             409
           )
         );
+      next();
     };
   }
 };
