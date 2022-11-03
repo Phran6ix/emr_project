@@ -17,11 +17,4 @@ module.exports = class AuthController {
       next(error);
     }
   }
-
-  async HttpDeleteStaff(req, res, next) {
-    try {
-    } catch (error) {
-      next(error);
-    }
-  }
 };
