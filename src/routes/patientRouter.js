@@ -13,6 +13,12 @@ const {
   HttpUpdatePatient,
 } = new PatientController();
 
-// patientRouter.post()
+patientRouter.route('/').post(HttpRegisterPatient).get(HttpGetAllPatients);
+
+patientRouter
+  .route('/:id')
+  .get(HttpGetOnePatient)
+  .delete(HttpDeletePatient)
+  .put(HttpUpdatePatient);
 
 module.exports = patientRouter;
