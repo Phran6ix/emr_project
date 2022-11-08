@@ -11,7 +11,6 @@ async function Bootstrap() {
   server.listen(port, () => {
     console.log(
       `emr server listening to traffic on port ${port} ${con.connection.host}`
-      // 'Listening to traffic'
     );
   });
 }

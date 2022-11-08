@@ -13,15 +13,8 @@ module.exports = class PatientController {
 
   async HttpUpdatePatient(req, res, next) {
     try {
-      //
-    } catch (error) {
-      next(error);
-    }
-  }
-
-  async HttpGetOnePatient(req, res, next) {
-    try {
-      //
+      const resp = await PatientService.updatePatient(req.params.id, req.body);
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }
@@ -29,7 +22,8 @@ module.exports = class PatientController {
 
   async HttpGetAllPatients(req, res, next) {
     try {
-      //
+      const resp = await PatientService.getAllPatients();
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }
@@ -37,7 +31,8 @@ module.exports = class PatientController {
 
   async HttpDeletePatient(req, res, next) {
     try {
-      //
+      await PatientService.deletePatient(req.params.id);
+      return serverResponse(res, 200, 'doc deleted successfully');
     } catch (error) {
       next(error);
     }
@@ -46,6 +41,14 @@ module.exports = class PatientController {
   async HttpAddPatientBioData(req, res, next) {
     try {
       //
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HttpGetOnePatient(req, res, next) {
+    try {
+      // const resp=await PatientService.HttpGetOnePatient()
     } catch (error) {
       next(error);
     }
