@@ -2,6 +2,7 @@ const { findByIdAndUpdate } = require('../database/models/patient.model');
 const Patient = require('../database/models/patient.model');
 const X = require('../exceptions/operational.exception');
 const { dumbPatient } = require('../utils/helper');
+const BioData = require('../database/models/biodata.model');
 
 module.exports = class PatientService {
   static async createPatient(payload) {
@@ -41,5 +42,30 @@ module.exports = class PatientService {
     }
   }
 
-  static async getAllBioData() {}
+  static async getAllBioData() {
+    try {
+      const docs = await Patient.find();
+      return docs;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async addPatientBio(payload) {
+    try {
+      const doc = await BioData.create(payload);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getPatientsBioData(patientId) {
+    try {
+      const doc = await BioData.findById(patientId);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
