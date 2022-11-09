@@ -5,7 +5,6 @@ const serverResponse = require('../utils/response');
 module.exports = class AuthController {
   async HttpLoginStaff(req, res, next) {
     try {
-      console.log(req.body);
       const resp = await AuthService.login(req.body);
       return serverResponse(
         res,
