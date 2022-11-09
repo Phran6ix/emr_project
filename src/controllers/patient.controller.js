@@ -48,7 +48,8 @@ module.exports = class PatientController {
 
   async HttpGetOnePatient(req, res, next) {
     try {
-      // const resp=await PatientService.HttpGetOnePatient()
+      const resp = await PatientService.getOnePatient(req.params.id);
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }
@@ -56,14 +57,16 @@ module.exports = class PatientController {
 
   async HttpGetAllBioData(req, res, next) {
     try {
-      //
+      const resp = await PatientService.getAllBioData();
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }
   }
   async HttpGetOneBioData(req, res, next) {
     try {
-      //
+      const resp = await PatientService.getOnePatientBio(req.params.id);
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }
@@ -71,7 +74,11 @@ module.exports = class PatientController {
 
   async HttpUpdateBioData(req, res, next) {
     try {
-      //
+      const resp = await PatientService.updatePatientBio(
+        req.params.id,
+        req.body
+      );
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }

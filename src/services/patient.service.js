@@ -1,10 +1,11 @@
-const { findByIdAndUpdate } = require('../database/models/patient.model');
-const Patient = require('../database/models/patient.model');
+// const { findByIdAndUpdate } = require('../database/models/patient.model');
 const X = require('../exceptions/operational.exception');
-const { dumbPatient } = require('../utils/helper');
+const Patient = require('../database/models/patient.model');
+const { dumbPatient, dumbBio } = require('../utils/helper');
 const BioData = require('../database/models/biodata.model');
 
 module.exports = class PatientService {
+  // patient and bio-data service
   static async createPatient(payload) {
     try {
       const doc = await Patient.create(payload);
@@ -42,9 +43,19 @@ module.exports = class PatientService {
     }
   }
 
+  static async getOnePatient(id) {
+    try {
+      let doc = await Patient.findById(id);
+      return dumbPatient.call(doc);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getAllBioData() {
     try {
-      const docs = await Patient.find();
+      let docs = await Patient.find();
+      docs = docs.map((doc) => dumbBio.call(doc));
       return docs;
     } catch (error) {
       throw error;
@@ -54,16 +65,25 @@ module.exports = class PatientService {
   static async addPatientBio(payload) {
     try {
       const doc = await BioData.create(payload);
+      return dumbBio.call(doc);
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getOnePatientBio(patientId) {
+    try {
+      const doc = await BioData.findById(patientId);
       return doc;
     } catch (error) {
       throw error;
     }
   }
 
-  static async getPatientsBioData(patientId) {
+  static async updatePatientBio(patientId, payload) {
     try {
-      const doc = await BioData.findById(patientId);
-      return doc;
+      const doc = await BioData.findByIdAndUpdate(patientId, payload);
+      return dumbBio.call(doc);
     } catch (error) {
       throw error;
     }

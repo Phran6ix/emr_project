@@ -10,15 +10,17 @@ const BioDataSchema = Mongoose.Schema({
     required: [true, 'age is required'],
   },
   address: {
-    type: string,
+    type: String,
   },
 
   genotype: {
     type: String,
   },
+
   bloodGroup: {
     type: String,
   },
+
   registration: {
     type: String,
   },
@@ -26,6 +28,7 @@ const BioDataSchema = Mongoose.Schema({
   occupation: {
     type: String,
   },
+  //
 });
 
 module.exports = Mongoose.model('BioData', BioDataSchema);

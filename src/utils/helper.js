@@ -34,9 +34,22 @@ function dumbPatient() {
     PId: this.PId,
   };
 }
+function dumbBio() {
+  return {
+    bio_id: this._id,
+    sex: this.sex,
+    age: this.age,
+    address: this.address,
+    genotype: this.genotype,
+    bloodGroup: this.bloodGroup,
+    occupation: this.occupation,
+    registration: this.registration,
+  };
+}
 module.exports = {
-  verifyToken,
+  dumbBio,
   signToken,
   dumbStaff,
+  verifyToken,
   dumbPatient,
 };
