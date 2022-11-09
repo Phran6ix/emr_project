@@ -63,6 +63,7 @@ module.exports = class PatientController {
       next(error);
     }
   }
+
   async HttpGetOneBioData(req, res, next) {
     try {
       const resp = await PatientService.getOnePatientBio(req.params.id);

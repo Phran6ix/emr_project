@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 async function signToken(id) {
@@ -34,6 +33,7 @@ function dumbPatient() {
     PId: this.PId,
   };
 }
+
 function dumbBio() {
   return {
     bio_id: this._id,
@@ -46,6 +46,7 @@ function dumbBio() {
     registration: this.registration,
   };
 }
+
 module.exports = {
   dumbBio,
   signToken,

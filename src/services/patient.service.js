@@ -74,7 +74,7 @@ module.exports = class PatientService {
   static async getOnePatientBio(patientId) {
     try {
       const doc = await BioData.findById(patientId);
-      return doc;
+      return dumbBio.call(doc);
     } catch (error) {
       throw error;
     }
