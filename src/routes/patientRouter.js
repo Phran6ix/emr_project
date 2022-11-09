@@ -15,14 +15,14 @@ const {
 
 patientRouter.route('/').post(HttpRegisterPatient).get(HttpGetAllPatients);
 
+patientRouter.route('/bios').get(HttpGetAllBioData).post(HttpAddPatientBioData);
+
 patientRouter
   .route('/:id')
   .get(HttpGetOnePatient)
   .delete(HttpDeletePatient)
   .put(HttpUpdatePatient);
 
-patientRouter.route('/bio').get(HttpGetAllBioData).post(HttpAddPatientBioData);
-
-patientRouter.route('/bio/:id').get(HttpGetOneBioData).put(HttpUpdateBioData);
+patientRouter.route('/bios/:id').get(HttpGetOneBioData).put(HttpUpdateBioData);
 
 module.exports = patientRouter;

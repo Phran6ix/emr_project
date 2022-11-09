@@ -54,7 +54,7 @@ module.exports = class PatientService {
 
   static async getAllBioData() {
     try {
-      let docs = await Patient.find();
+      let docs = await BioData.find();
       docs = docs.map((doc) => dumbBio.call(doc));
       return docs;
     } catch (error) {

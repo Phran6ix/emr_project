@@ -40,7 +40,8 @@ module.exports = class PatientController {
 
   async HttpAddPatientBioData(req, res, next) {
     try {
-      //
+      const resp = await PatientService.addPatientBio(req.body);
+      return serverResponse(res, 200, resp);
     } catch (error) {
       next(error);
     }

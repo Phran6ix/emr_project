@@ -1,8 +1,7 @@
 const Mongoose = require('mongoose');
-
 const BioDataSchema = Mongoose.Schema({
   age: {
-    type: Number,
+    type: String,
   },
   sex: {
     type: String,
