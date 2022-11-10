@@ -9,3 +9,5 @@ const AppointmentSchema = Mongoose.Schema({
     type: Boolean,
   },
 });
+
+module.exports = Mongoose.model('Appointment', AppointmentSchema);
