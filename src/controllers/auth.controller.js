@@ -10,7 +10,7 @@ module.exports = class AuthController {
         res,
         200,
         dumbStaff.call(resp),
-        await signToken(resp._id)
+        `Bearer ${await signToken(resp._id)}`
       );
     } catch (error) {
       next(error);
