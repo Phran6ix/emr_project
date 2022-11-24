@@ -6,19 +6,19 @@ const Staff = new StaffController();
 staffRouter.use(protectRoute);
 
 staffRouter
-  .route('/staff')
+  .route('/')
   .post(RestrictAccess('admin'), Staff.HttpCreateStaff)
   .get(Staff.HttpGetAllStaff);
 
 staffRouter
-  .route('/staff/:id')
+  .route('/:id')
   .patch(RestrictAccess('admin'), Staff.HttpUpdateStaff)
   .delete(RestrictAccess('admin'), Staff.HttpDeleteStaff);
 
-staffRouter.get('/staff/info/:id', Staff.HttpGetOneStaff);
+staffRouter.get('/info/:id', Staff.HttpGetOneStaff);
 
 staffRouter.patch(
-  '/staff/status/:id',
+  '/status/:id',
   RestrictAccess('admin'),
   Staff.HttpUpdateStaffStatus
 );

@@ -43,4 +43,12 @@ module.exports = class PrescriptionController {
       next(error);
     }
   }
+
+  async HttpGetSessionPrescriptions(req, res, next) {
+    try {
+      //
+    } catch (error) {
+      next(error);
+    }
+  }
 };
