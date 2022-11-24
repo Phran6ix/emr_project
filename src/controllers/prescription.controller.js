@@ -7,6 +7,7 @@ module.exports = class PrescriptionController {
       const resp = await PrescriptionService.addPrescription(req.body);
       return serverResponse(res, 201, resp);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   }
@@ -19,6 +20,8 @@ module.exports = class PrescriptionController {
       );
       return serverResponse(res, 201, resp);
     } catch (error) {
+      console.log(error);
+
       next(error);
     }
   }
