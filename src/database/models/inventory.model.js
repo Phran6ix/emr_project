@@ -17,6 +17,7 @@ const InventorySchema = Mongoose.Schema({
 
   quantity: {
     type: Number,
+    required: true,
   },
 
   type: {
