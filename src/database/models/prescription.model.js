@@ -2,7 +2,7 @@ const Mongoose = require('mongoose');
 
 const prescriptionSchema = Mongoose.Schema({
   quantity: {
-    type: String,
+    type: Number,
     required: true,
   },
   note: {
@@ -29,6 +29,11 @@ const prescriptionSchema = Mongoose.Schema({
     required: true,
   },
   sessionId: {
+    type: Mongoose.Types.ObjectId,
+    required: true,
+  },
+
+  doctorId: {
     type: Mongoose.Types.ObjectId,
     required: true,
   },

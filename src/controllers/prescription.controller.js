@@ -4,6 +4,7 @@ const PrescriptionService = require('../services/prescription.service');
 module.exports = class PrescriptionController {
   async HttpAddPrescription(req, res, next) {
     try {
+      req.body.doctorId = req.user.id;
       const resp = await PrescriptionService.addPrescription(req.body);
       return serverResponse(res, 201, resp);
     } catch (error) {
