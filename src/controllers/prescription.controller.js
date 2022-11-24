@@ -31,4 +31,13 @@ module.exports = class PrescriptionController {
       next(error);
     }
   }
+
+  async HttpGetPrescription(req, res, next) {
+    try {
+      const resp = await PrescriptionService.getPrescription(req.params.id);
+      return serverResponse(res, 201, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
 };
