@@ -41,7 +41,6 @@ module.exports = class InventoryService {
 
   static async getAllInventory(query) {
     try {
-      console.log(query);
       const limit = +query.limit || 0;
       const skip = (+query.page - 1) * limit;
       let docs = await Inventory.find().skip(skip).limit(limit);
