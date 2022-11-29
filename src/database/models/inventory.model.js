@@ -5,6 +5,7 @@ const InventorySchema = Mongoose.Schema({
     type: String,
     required: true,
   },
+  //
 
   description: {
     type: String,
