@@ -5,6 +5,7 @@ const AppointmentSchema = Mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+
   attendance: {
     type: Boolean,
   },
