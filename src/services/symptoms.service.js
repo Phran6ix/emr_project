@@ -34,7 +34,7 @@ module.exports = class symptomController {
 
   static async getSessionSymptoms(session_id) {
     try {
-      const docs = await PatientSymptom.findById(session_id);
+      const docs = await PatientSymptom.find({ sessionId: session_id });
       return docs;
     } catch (error) {
       throw error;
