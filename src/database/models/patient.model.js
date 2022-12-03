@@ -24,6 +24,7 @@ const PatientSchema = Mongoose.Schema({
   PID: {
     type: String,
     required: true,
+    unique: [true, 'there is a user with this PID'],
   },
 });
 
