@@ -9,6 +9,7 @@ const SymptomsSchema = Mongoose.Schema({
 
   description: {
     type: String,
+    required: true,
   },
 
   note: {
