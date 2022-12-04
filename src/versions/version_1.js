@@ -5,10 +5,11 @@ const patientRouter = require('../routes/patientRouter');
 const prescriptionRouter = require('../routes/prescriptionRouter');
 const InventoryRouter = require('../routes/inventoryRouter');
 const SymptomRouter = require('../routes/symptomRouter');
-
-version1.use('/api/v1/auth', AuthRouter);
+const AuthService = require('../services/auth.service');
 
 version1.use('/api/v1/staff', staffRouter);
+
+version1.use(AuthService.protectRoute);
 
 version1.use('/api/v1/symptoms', SymptomRouter);
 
