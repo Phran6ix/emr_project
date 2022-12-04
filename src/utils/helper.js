@@ -30,7 +30,7 @@ function dumbPatient() {
     dob: this.dob,
     phoneNumber: this.phoneNumber,
     email: this.email,
-    PId: this.PId,
+    PID: this.PID,
   };
 }
 
