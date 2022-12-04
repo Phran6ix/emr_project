@@ -40,4 +40,14 @@ module.exports = class symptomService {
       throw error;
     }
   }
+
+  static async getOneSymptom(symptom_id) {
+    try {
+      const doc = await PatientSymptom.findById(symptom_id);
+      if (!doc) throw new X('no symptom found with the provided id', 404);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
