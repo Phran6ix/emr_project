@@ -1,6 +1,6 @@
+const serverResponse = require('../utils/response');
 const AuthService = require('../services/auth.service');
 const { signToken, dumbStaff } = require('../utils/helper');
-const serverResponse = require('../utils/response');
 
 module.exports = class AuthController {
   async HttpLoginStaff(req, res, next) {

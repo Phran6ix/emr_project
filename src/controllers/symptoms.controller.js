@@ -4,7 +4,7 @@ const SymptomService = require('../services/symptoms.service');
 module.exports = class SymptomController {
   async HttpAddPatientSymptom(req, res, next) {
     try {
-      req.body.doctorId = req.user._id;
+      req.body.doctorId = req.user.id;
       const resp = await SymptomService.addPatientSymptom(req.body);
       return serverResponse(res, 201, resp);
     } catch (error) {
