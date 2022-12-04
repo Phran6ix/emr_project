@@ -9,6 +9,13 @@ const {
   HttpGetSessionSymptom,
 } = new SymptomController();
 
-SymptomRouter.route('/').post(HttpAddPatientSymptom);
+SymptomRouter.post('/', HttpAddPatientSymptom);
+
+SymptomRouter.route('/:id')
+  .get(HttpGetPatientSymptom)
+  .patch(HttpEditPatientSymptom)
+  .delete(HttpDeletePatientSymptom);
+
+SymptomRouter.get('/session/:id', HttpGetSessionSymptom);
 
 module.exports = SymptomRouter;
