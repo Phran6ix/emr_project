@@ -1,4 +1,4 @@
-const SymptomController = require('../controllers/symptoms.controller.');
+const SymptomController = require('../controllers/symptoms.controller');
 
 const SymptomRouter = require('express').Router();
 const {

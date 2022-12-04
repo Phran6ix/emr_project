@@ -1,6 +1,5 @@
 const PatientSymptom = require('../database/models/patient-symptom.model');
 const X = require('../exceptions/operational.exception');
-const Symptom = require('../database/models/symptoms.model');
 
 module.exports = class symptomService {
   static async addPatientSymptom(payload) {

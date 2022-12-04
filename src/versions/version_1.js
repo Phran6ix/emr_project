@@ -17,4 +17,5 @@ version1.use('/api/v1/patients', patientRouter);
 version1.use('/api/v1/inventory', InventoryRouter);
 
 version1.use('/api/v1/prescriptions', prescriptionRouter);
+
 module.exports = version1;
