@@ -1,5 +1,5 @@
 const Prescription = require('../database/models/prescription.model');
-// const Session = require('../database/models/.model');
+const Diagnosis = require('../database/models/diagnosis.model');
 
 const X = require('../exceptions/operational.exception');
 
@@ -43,6 +43,53 @@ module.exports = class PrescriptionService {
     }
   }
 
+  static async getDiagnosis(patientId) {
+    try {
+      const doc = await Diagnosis.findById(patientId);
+      if (!doc) throw new X('no doc found with the provided id', 404);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async updateDiagnosis(patientId, payload) {
+    try {
+      const doc = await Diagnosis.findByIdAndUpdate(patientId, payload);
+      if (!doc) throw new X('no doc found with the provided id', 404);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getAllDiagnosis(patientId) {
+    try {
+      const doc = await Diagnosis.find();
+      if (!doc) throw new X('no doc found with the provided id', 404);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async deleteDiagnosis(patientId) {
+    try {
+      const doc = await Diagnosis.findByIdAndDelete(patientId);
+      if (!doc) throw new X('no doc found with the provided id', 404);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
+  static async createDiagnosis(payload) {
+    try {
+      const doc = await Diagnosis.create(payload);
+      return doc;
+    } catch (error) {
+      throw error;
+    }
+  }
   // static async getSessionPrescriptions ( sessionId )
   // {
   //     try {

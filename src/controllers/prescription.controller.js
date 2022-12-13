@@ -42,6 +42,54 @@ module.exports = class PrescriptionController {
     }
   }
 
+  async HttpCreateDiagnosis(req, res, next) {
+    try {
+      const resp = await PrescriptionService.createDiagnosis(req.body);
+      return serverResponse(res, 201, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HttpDeleteDiagnosis(req, res, next) {
+    try {
+      const resp = await PrescriptionService.deleteDiagnosis(req.params.id);
+      return serverResponse(res, 200, 'diagnosis deleted successfully');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HttpGetDiagnosis(req, res, next) {
+    try {
+      const resp = await PrescriptionService.getDiagnosis(req.params.id);
+      return serverResponse(res, 200, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HttpGetAllDiagnosis(req, res, next) {
+    try {
+      const resp = await PrescriptionService.getAllDiagnosis();
+      return serverResponse(res, 200, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HttpUpdateDiagnosis(req, res, next) {
+    try {
+      const resp = await PrescriptionService.updatePrescription(
+        req.params.id,
+        payload
+      );
+      return serverResponse(res, 200, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async HttpGetSessionPrescriptions(req, res, next) {
     try {
       //
