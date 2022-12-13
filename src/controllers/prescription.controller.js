@@ -20,8 +20,6 @@ module.exports = class PrescriptionController {
       );
       return serverResponse(res, 201, resp);
     } catch (error) {
-      console.log(error);
-
       next(error);
     }
   }
