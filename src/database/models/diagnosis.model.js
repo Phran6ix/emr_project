@@ -5,6 +5,24 @@ const DiagnosisSchema = Mongoose.Schema({
     type: String,
     required: [true, 'appointment string is required'],
   },
+
+  sessionId: {
+    type: Mongoose.Types.ObjectId,
+    required: true,
+  },
+
+  title: {
+    type: String,
+  },
+
+  description: {
+    type: String,
+  },
+
+  patientId: {
+    type: Mongoose.Types.ObjectId,
+    required: true,
+  },
 });
 
 module.exports = Mongoose.model('Diagnosis', DiagnosisSchema);

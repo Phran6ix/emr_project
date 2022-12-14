@@ -43,9 +43,9 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async getDiagnosis(patientId) {
+  static async getDiagnosis(diagnosis_id) {
     try {
-      const doc = await Diagnosis.findById(patientId);
+      const doc = await Diagnosis.findById(diagnosis_id);
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -53,9 +53,9 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async updateDiagnosis(patientId, payload) {
+  static async updateDiagnosis(diagnosis_id, payload) {
     try {
-      const doc = await Diagnosis.findByIdAndUpdate(patientId, payload);
+      const doc = await Diagnosis.findByIdAndUpdate(diagnosis_id, payload);
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -63,7 +63,7 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async getAllDiagnosis(patientId) {
+  static async getAllDiagnosis(diagnosis_id) {
     try {
       const doc = await Diagnosis.find();
       if (!doc) throw new X('no doc found with the provided id', 404);
@@ -73,9 +73,9 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async deleteDiagnosis(patientId) {
+  static async deleteDiagnosis(diagnosis_id) {
     try {
-      const doc = await Diagnosis.findByIdAndDelete(patientId);
+      const doc = await Diagnosis.findByIdAndDelete(diagnosis_id);
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -90,12 +90,22 @@ module.exports = class PrescriptionService {
       throw error;
     }
   }
-  // static async getSessionPrescriptions ( sessionId )
-  // {
-  //     try {
-  //         const docs=await
-  //     } catch (error) {
-  //         throw error
-  //     }
-  // }
+
+  static async getDiagnosisSession(sessionId) {
+    try {
+      const docs = await Diagnosis.find(sessionId);
+      return docs;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getSessionPrescriptions(sessionId) {
+    try {
+      const docs = await Prescription.find(sessionId);
+      return docs;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
