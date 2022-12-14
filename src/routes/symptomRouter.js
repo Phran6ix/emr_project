@@ -1,4 +1,5 @@
 const SymptomController = require('../controllers/symptoms.controller');
+const AuthService = require('../services/auth.service');
 
 const SymptomRouter = require('express').Router();
 const {
@@ -9,6 +10,7 @@ const {
   HttpGetSessionSymptom,
 } = new SymptomController();
 
+SymptomRouter.use(AuthService.protectRoute);
 SymptomRouter.post('/', HttpAddPatientSymptom);
 
 SymptomRouter.route('/:id')

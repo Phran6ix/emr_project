@@ -1,4 +1,5 @@
 const InventoryRouter = require('express').Router();
+const AuthService = require('../services/auth.service');
 const InventoryController = require('../controllers/inventory.controller');
 const {
   HttpAddToInventory,
@@ -7,6 +8,8 @@ const {
   HttpGetAllInventory,
   HttpGetInventory,
 } = new InventoryController();
+
+InventoryRouter.use(AuthService.protectRoute);
 
 InventoryRouter.route('/').post(HttpAddToInventory).get(HttpGetAllInventory);
 

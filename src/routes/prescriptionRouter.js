@@ -1,5 +1,6 @@
 const prescriptionRouter = require('express').Router();
 const PrescriptionController = require('../controllers/prescription.controller');
+const AuthService = require('../services/auth.service');
 const {
   HttpAddPrescription,
   HttpDeletePrescription,
@@ -7,6 +8,8 @@ const {
   HttpUpdatePrescription,
   HttpGetSessionPrescriptions,
 } = new PrescriptionController();
+
+prescriptionRouter.use(AuthService.protectRoute);
 
 prescriptionRouter.route('/').post(HttpAddPrescription);
 

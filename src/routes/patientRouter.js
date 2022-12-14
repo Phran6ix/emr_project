@@ -1,5 +1,6 @@
 const patientRouter = require('express').Router();
 const PatientController = require('../controllers/patient.controller');
+const AuthService = require('../services/auth.service');
 
 const {
   HttpUpdatePatient,
@@ -12,6 +13,8 @@ const {
   HttpGetOneBioData,
   HttpUpdateBioData,
 } = new PatientController();
+
+patientRouter.use(AuthService.protectRoute);
 
 patientRouter.route('/').post(HttpRegisterPatient).get(HttpGetAllPatients);
 
