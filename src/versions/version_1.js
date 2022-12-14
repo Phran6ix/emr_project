@@ -1,16 +1,18 @@
 const version1 = require('express').Router();
-const staffRouter = require('../routes/staffRouter');
 const AuthRouter = require('../routes/authRouter');
+const staffRouter = require('../routes/staffRouter');
+const AuthService = require('../services/auth.service');
+const SymptomRouter = require('../routes/symptomRouter');
 const patientRouter = require('../routes/patientRouter');
-const prescriptionRouter = require('../routes/prescriptionRouter');
 const diagnosisRouter = require('../routes/diagnosisRouter');
 const InventoryRouter = require('../routes/inventoryRouter');
-const SymptomRouter = require('../routes/symptomRouter');
-const AuthService = require('../services/auth.service');
+const prescriptionRouter = require('../routes/prescriptionRouter');
 
-version1.use('/api/v1/staff', staffRouter);
+version1.use('/api/v1/auth', AuthRouter);
 
 version1.use(AuthService.protectRoute);
+
+version1.use('/api/v1/staff', staffRouter);
 
 version1.use('/api/v1/symptoms', SymptomRouter);
 
