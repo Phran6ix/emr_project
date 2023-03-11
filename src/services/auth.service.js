@@ -40,6 +40,9 @@ module.exports = class AuthService {
         !(await user.comparePassword(payload.password, user.password))
       )
         throw new X('invalid username or password', 403);
+
+      if (!user.status)
+        throw new X('You are not authorized. Reach out to the admin', 403);
       return user;
     } catch (error) {
       throw error;

@@ -47,10 +47,10 @@ module.exports = class StaffController {
     }
   }
 
-  async HttpUpdateStaffStatus(req, res, next) {
+  async HttpUpdateStaffOnlineStatus(req, res, next) {
     try {
       const resp = await StaffService.updateStaffStatus(req.user.id, req.query);
-      return serverResponse(res, 200, resp);
+      return serverResponse(res, 200, { message: 'Update Successful' });
     } catch (error) {
       next(error);
     }
@@ -60,6 +60,17 @@ module.exports = class StaffController {
     try {
       const onlinestaff = await StaffService.getOnlineStaffs(req.query);
       return serverResponse(res, 200, onlinestaff);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async HTTPrevokeOrGrant(req, res, next) {
+    try {
+      const update = await StaffService.revokeOrGrantAccess(
+        req.params.id,
+        req.query
+      );
+      return serverResponse(res, 200, { message: 'Operation successful' });
     } catch (error) {
       next(error);
     }

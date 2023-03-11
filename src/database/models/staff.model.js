@@ -33,6 +33,11 @@ const staffSchema = Mongoose.Schema(
       required: true,
     },
 
+    online: {
+      type: Boolean,
+      default: true,
+    },
+
     status: {
       type: Boolean,
       default: true,

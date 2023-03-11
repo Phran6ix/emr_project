@@ -56,14 +56,12 @@ module.exports = class StaffService {
 
   static async updateStaffStatus(id, query) {
     try {
-      if (!query.status) throw new X('provide a query status action', 400);
+      if (!query.online) throw new X('provide a query status action', 400);
 
-      const doc = await Staff.findByIdAndUpdate(id, { status: query.status });
+      const doc = await Staff.findByIdAndUpdate(id, { online: query.online });
       if (!doc) throw new X(' no doc found with the provided id', 404);
-      return dumbStaff.call(doc);
+      return;
     } catch (error) {
-      console.log(id, query);
-
       throw error;
     }
   }
@@ -73,6 +71,20 @@ module.exports = class StaffService {
       const staffs = await Staff.find(query);
       const response = { length: staffs.length, staffs };
       return response;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async revokeOrGrantAccess(id, query) {
+    try {
+      if (!query.status)
+        throw new X(
+          'Status query is not found, please input the appropriate input',
+          400
+        );
+      const staff = await Staff.findByIdAndUpdate(id, query);
+      return staff;
     } catch (error) {
       throw error;
     }

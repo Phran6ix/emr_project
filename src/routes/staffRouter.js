@@ -12,7 +12,7 @@ staffRouter
 
 staffRouter
   .route('/status')
-  .patch(Staff.HttpUpdateStaffStatus)
+  .patch(Staff.HttpUpdateStaffOnlineStatus)
   .get(Staff.HTTPGetOnlineStaffs);
 
 staffRouter
@@ -20,6 +20,7 @@ staffRouter
   .patch(RestrictAccess('admin'), Staff.HttpUpdateStaff)
   .delete(RestrictAccess('admin'), Staff.HttpDeleteStaff);
 
+staffRouter.patch('/status/:id', Staff.HTTPrevokeOrGrant);
 staffRouter.get('/info/:id', Staff.HttpGetOneStaff);
 
 module.exports = staffRouter;
