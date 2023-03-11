@@ -11,16 +11,15 @@ staffRouter
   .get(Staff.HttpGetAllStaff);
 
 staffRouter
+  .route('/status')
+  .patch(Staff.HttpUpdateStaffStatus)
+  .get(Staff.HTTPGetOnlineStaffs);
+
+staffRouter
   .route('/:id')
   .patch(RestrictAccess('admin'), Staff.HttpUpdateStaff)
   .delete(RestrictAccess('admin'), Staff.HttpDeleteStaff);
 
 staffRouter.get('/info/:id', Staff.HttpGetOneStaff);
-
-staffRouter.patch(
-  '/status/:id',
-  RestrictAccess('admin'),
-  Staff.HttpUpdateStaffStatus
-);
 
 module.exports = staffRouter;

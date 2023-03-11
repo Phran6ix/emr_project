@@ -49,11 +49,17 @@ module.exports = class StaffController {
 
   async HttpUpdateStaffStatus(req, res, next) {
     try {
-      const resp = await StaffService.HttpUpdateStaffStatus(
-        req.params.id,
-        req.query
-      );
+      const resp = await StaffService.updateStaffStatus(req.user.id, req.query);
       return serverResponse(res, 200, resp);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HTTPGetOnlineStaffs(req, res, next) {
+    try {
+      const onlinestaff = await StaffService.getOnlineStaffs(req.query);
+      return serverResponse(res, 200, onlinestaff);
     } catch (error) {
       next(error);
     }

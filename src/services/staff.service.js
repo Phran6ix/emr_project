@@ -57,13 +57,24 @@ module.exports = class StaffService {
   static async updateStaffStatus(id, query) {
     try {
       if (!query.status) throw new X('provide a query status action', 400);
+
       const doc = await Staff.findByIdAndUpdate(id, { status: query.status });
       if (!doc) throw new X(' no doc found with the provided id', 404);
       return dumbStaff.call(doc);
     } catch (error) {
+      console.log(id, query);
+
       throw error;
     }
   }
 
-  // static async
+  static async getOnlineStaffs(query) {
+    try {
+      const staffs = await Staff.find(query);
+      const response = { length: staffs.length, staffs };
+      return response;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
