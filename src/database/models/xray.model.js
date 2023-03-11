@@ -1,6 +1,7 @@
+const { default: mongoose } = require('mongoose');
 const Mongoose = require('mongoose');
 
-const TestSchema = Mongoose.Schema({
+const XRaySchema = Mongoose.Schema({
   patient: {
     type: Mongoose.Types.ObjectId,
     ref: 'Patient',
@@ -16,6 +17,7 @@ const TestSchema = Mongoose.Schema({
     type: Mongoose.Types.ObjectId,
     ref: 'Session',
   },
+
   title: {
     type: String,
   },
@@ -26,14 +28,14 @@ const TestSchema = Mongoose.Schema({
     type: String,
   },
 
-  paid: {
+  concluded: {
     type: Boolean,
     default: false,
   },
-  concluded: {
+  paid: {
     type: Boolean,
     default: false,
   },
 });
 
-module.exports = Mongoose.model('Lab', TestSchema);
+module.exports = Mongoose.model('X-ray', XRaySchema);

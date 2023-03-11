@@ -2,35 +2,33 @@ const Mongoose = require('mongoose');
 
 const SymptomsSchema = Mongoose.Schema({
   //
-  title: {
-    type: String,
-    required: true,
-  },
-
-  description: {
-    type: String,
-    required: true,
+  symptom: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'Symptom',
   },
 
   note: {
-    type: Boolean,
+    type: String,
     default: false,
   },
 
-  patientId: {
+  patient: {
     type: Mongoose.Types.ObjectId,
+    ref: 'Patient',
     required: true,
   },
 
-  doctorId: {
+  doctor: {
     type: Mongoose.Types.ObjectId,
+    ref: 'Staff',
     required: true,
   },
 
-  sessionId: {
+  sessionID: {
     type: Mongoose.Types.ObjectId,
+    ref: 'Session',
     required: true,
   },
 });
 
-module.exports = Mongoose.model('Symptoms', SymptomsSchema);
+module.exports = Mongoose.model('PatientSymptom', SymptomsSchema);

@@ -6,7 +6,7 @@ const DiagnosisSchema = Mongoose.Schema({
     required: [true, 'appointment string is required'],
   },
 
-  sessionId: {
+  sessionID: {
     type: Mongoose.Types.ObjectId,
     required: true,
   },
@@ -19,8 +19,9 @@ const DiagnosisSchema = Mongoose.Schema({
     type: String,
   },
 
-  patientId: {
+  patient: {
     type: Mongoose.Types.ObjectId,
+    ref: 'Patient',
     required: true,
   },
 });

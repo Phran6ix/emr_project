@@ -21,21 +21,24 @@ const prescriptionSchema = Mongoose.Schema({
   // relations
   drugId: {
     type: Mongoose.Types.ObjectId,
+    ref: 'Inventory',
     required: true,
   },
 
-  patientId: {
+  patient: {
     type: Mongoose.Types.ObjectId,
-    required: true,
-  },
-  sessionId: {
-    type: Mongoose.Types.ObjectId,
-    required: true,
+    ref: 'Patient',
   },
 
-  doctorId: {
+  doctor: {
     type: Mongoose.Types.ObjectId,
-    required: true,
+    ref: 'Staff',
+    required: [true, 'Doctor ID is required'],
+  },
+
+  sessionID: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'Session',
   },
 });
 

@@ -6,6 +6,14 @@ const SessionSchema = Mongoose.Schema({
     enum: ['pending', 'in-progress', 'completed'],
     default: 'in-progress',
   },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
+  patient: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'Patient',
+  },
 });
 
 module.exports = Mongoose.model('Session', SessionSchema);

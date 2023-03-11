@@ -80,9 +80,9 @@ module.exports = class PrescriptionController {
 
   async HttpUpdateDiagnosis(req, res, next) {
     try {
-      const resp = await PrescriptionService.updatePrescription(
+      const resp = await PrescriptionService.updateDiagnosis(
         req.params.id,
-        payload
+        req.body
       );
       return serverResponse(res, 200, resp);
     } catch (error) {
