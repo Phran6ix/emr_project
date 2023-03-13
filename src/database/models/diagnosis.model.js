@@ -1,9 +1,13 @@
 const Mongoose = require('mongoose');
 
 const DiagnosisSchema = Mongoose.Schema({
-  name: {
+  note: {
     type: String,
-    required: [true, 'appointment string is required'],
+  },
+
+  diagnosis: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'DiagNote',
   },
 
   sessionID: {
@@ -11,18 +15,15 @@ const DiagnosisSchema = Mongoose.Schema({
     required: true,
   },
 
-  title: {
-    type: String,
-  },
-
-  description: {
-    type: String,
-  },
-
   patient: {
     type: Mongoose.Types.ObjectId,
     ref: 'Patient',
     required: true,
+  },
+
+  doctor: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'Staff',
   },
 });
 

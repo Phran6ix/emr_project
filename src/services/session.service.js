@@ -6,6 +6,7 @@ const Patient = require('../database/models/patient.model');
 const X = require('../exceptions/operational.exception');
 const PatientSymptom = require('../database/models/patient-symptom.model');
 const Diagnosis = require('../database/models/diagnosis.model');
+const { populate } = require('../database/models/prescription.model');
 
 module.exports = class SessionService {
   static async getAllSession() {
@@ -84,8 +85,14 @@ module.exports = class SessionService {
       const diagnosis = new Promise((res) => {
         res(
           Diagnosis.findOne(filter).populate({
-            path: 'patient',
-            select: 'name dob PID',
+            populate: {
+              path: 'patient',
+              select: 'name dob PID',
+            },
+            populate: {
+              path: 'diagonisis',
+              select: 'title description',
+            },
           })
         );
       });

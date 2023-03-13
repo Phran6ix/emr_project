@@ -84,7 +84,7 @@ module.exports = class PrescriptionController {
         req.params.id,
         req.body
       );
-      return serverResponse(res, 200, resp);
+      return serverResponse(res, 200, { message: 'Update Successful' });
     } catch (error) {
       next(error);
     }

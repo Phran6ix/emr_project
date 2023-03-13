@@ -35,7 +35,7 @@ module.exports = class PrescriptionService {
 
   static async getPrescription(patientId) {
     try {
-      const doc = await Prescription.findById(patientId);
+      const doc = await Prescription.findOne({ patient: patientId });
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -45,7 +45,19 @@ module.exports = class PrescriptionService {
 
   static async getDiagnosis(diagnosis_id) {
     try {
-      const doc = await Diagnosis.findById(diagnosis_id);
+      const doc = await Diagnosis.findById(diagnosis_id)
+        .populate({
+          path: 'diagnosis',
+          select: 'title description',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .populate({
+          path: 'doctor',
+          select: 'username role fullName online status',
+        });
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -63,9 +75,22 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async getAllDiagnosis(diagnosis_id) {
+  static async getAllDiagnosis() {
     try {
-      const doc = await Diagnosis.find();
+      const doc = await Diagnosis.find()
+        .populate({
+          path: 'diagnosis',
+          select: 'title description',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .populate({
+          path: 'doctor',
+          select: 'username role fullName online status',
+        });
+
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
