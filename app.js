@@ -6,6 +6,7 @@ const mongoSanitize = require('mongo-sanitize');
 const Home = require('./src/controllers/home.controller');
 const ErrorHandler = require('./src/exceptions/global.exception');
 const version1 = require('./src/versions/version_1');
+
 const app = express();
 
 app.use(cors());

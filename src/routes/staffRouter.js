@@ -3,12 +3,8 @@ const StaffController = require('../controllers/staff.controller');
 const { protectRoute, RestrictAccess } = require('../services/auth.service');
 const Staff = new StaffController();
 
+staffRouter.route('/').post(Staff.HttpCreateStaff).get(Staff.HttpGetAllStaff);
 staffRouter.use(protectRoute);
-
-staffRouter
-  .route('/')
-  .post(RestrictAccess('admin'), Staff.HttpCreateStaff)
-  .get(Staff.HttpGetAllStaff);
 
 staffRouter
   .route('/status')
