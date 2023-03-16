@@ -5,7 +5,10 @@ module.exports = class QueueController {
   async HTTPAddPatientToQueue(req, res, next) {
     try {
       const queue = await QueueService.addPatientToQueue(req.body);
-      serverResponse(res, 201, queue);
+      serverResponse(res, 201, {
+        message: 'Added patient to queue',
+        sessionID: queue,
+      });
     } catch (error) {
       next(error);
     }

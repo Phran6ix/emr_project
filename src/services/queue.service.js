@@ -8,8 +8,10 @@ module.exports = class QueueService {
       const session = new Session({
         patient: payload.patient,
       });
+      doc.session = session;
       await session.save();
-      return doc;
+      await doc.save();
+      return session.id;
     } catch (error) {
       throw error;
     }
@@ -17,7 +19,7 @@ module.exports = class QueueService {
   static async getDoctorsPatient(query) {
     try {
       const doc = await Queue.find(query)
-        .populate({ path: 'patient', select: '-__v' })
+        .populate({ path: 'patient', select: 'name dob email phoneNumber PID' })
         .sort({ createdAt: -1 });
 
       return doc;
@@ -27,7 +29,10 @@ module.exports = class QueueService {
   }
   static async getADoctorsPatient(query) {
     try {
-      const doc = await Queue.findOne(query).populate('patient');
+      const doc = await Queue.findOne(query).populate(
+        'patient',
+        'name dob email phoneNumber PID'
+      );
 
       return doc;
     } catch (error) {
