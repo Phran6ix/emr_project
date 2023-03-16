@@ -1,3 +1,4 @@
+const X = require('../exceptions/operational.exception');
 const QueueService = require('../services/queue.service');
 const serverResponse = require('../utils/response');
 
@@ -19,6 +20,7 @@ module.exports = class QueueController {
       const queue = await QueueService.getDoctorsPatient({
         doctor: req.user.id,
       });
+
       serverResponse(res, 200, queue);
     } catch (error) {
       next(error);
@@ -31,6 +33,7 @@ module.exports = class QueueController {
         patient: req.params.id,
         doctor: req.user.id,
       });
+
       serverResponse(res, 200, queue);
     } catch (error) {
       throw error;

@@ -22,6 +22,9 @@ module.exports = class QueueService {
         .populate({ path: 'patient', select: 'name dob email phoneNumber PID' })
         .sort({ createdAt: -1 });
 
+      if (!doc) {
+        throw new X('Document not found', 404);
+      }
       return doc;
     } catch (error) {
       throw error;
@@ -33,6 +36,9 @@ module.exports = class QueueService {
         'patient',
         'name dob email phoneNumber PID'
       );
+      if (!doc) {
+        throw new X('Document not found', 404);
+      }
 
       return doc;
     } catch (error) {
@@ -43,6 +49,9 @@ module.exports = class QueueService {
   static async getPatientBySessionID(query) {
     try {
       const doc = await Queue.find(query);
+      if (!doc) {
+        throw new X('Document not found', 404);
+      }
       return doc;
     } catch (error) {
       throw error;
