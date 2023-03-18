@@ -1,4 +1,5 @@
 const PatientSymptom = require('../database/models/patient-symptom.model');
+const Session = require('../database/models/patient-session.model');
 const X = require('../exceptions/operational.exception');
 
 module.exports = class symptomService {
@@ -39,26 +40,29 @@ module.exports = class symptomService {
 
   static async getSessionSymptoms(session_id) {
     try {
+      const session = await Session.findById(session_id)
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .select('status createdAt patient');
+
       const docs = await PatientSymptom.find({
         sessionID: session_id,
       })
         .populate({
           path: 'symptom',
-          select: 'title description',
+          select: 'title description -_id',
         })
-        .populate({
-          path: 'patient',
-          select: 'name dob PID ',
-        })
-        .populate({
-          path: 'doctor',
-          select: 'role fullName username',
-        })
-        .populate({
-          path: 'sessionID',
-          select: '-__v -_id',
-        });
-      return docs;
+        .select('symptom note');
+
+      if (!docs || !session) {
+        throw new X('Document not found', 404);
+      }
+      return {
+        session,
+        symptoms: docs,
+      };
     } catch (error) {
       throw error;
     }
