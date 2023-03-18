@@ -1,5 +1,6 @@
 const { findByIdAndDelete } = require('../database/models/lab-test.model');
 const LabTest = require('../database/models/lab-test.model');
+const Session = require('../database/models/patient-session.model');
 const X = require('../exceptions/operational.exception');
 
 module.exports = class TestService {
@@ -50,6 +51,31 @@ module.exports = class TestService {
     try {
       const doc = await LabTest.findByIdAndDelete(filter);
       return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getLabSession(session_id) {
+    try {
+      const session = await Session.findById(session_id)
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .select('status createdAt patient');
+
+      const docs = await LabTest.find({ sessionID: session_id }).select(
+        '-__v -_id '
+      );
+
+      if (!docs || !session) {
+        throw new X('Documents not found', 404);
+      }
+      return {
+        session,
+        lab: docs,
+      };
     } catch (error) {
       throw error;
     }

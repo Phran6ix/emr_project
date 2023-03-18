@@ -7,6 +7,7 @@ const {
   HTTPUploadResult,
   HTTPGetAPendingTest,
   HTTPdeleteATest,
+  HTTPGetLabSession,
 } = new LabController();
 
 labRouter.use(AuthService.protectRoute);
@@ -16,5 +17,7 @@ labRouter.get('/pending-test', HTTPGetPendingTests);
 labRouter.get('/pending-test/:id', HTTPGetAPendingTest);
 labRouter.patch('/upload-result/:id', HTTPUploadResult);
 labRouter.delete('/delete-test/:id', HTTPdeleteATest);
+
+labRouter.get('/session/:id', HTTPGetLabSession);
 
 module.exports = labRouter;

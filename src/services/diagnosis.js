@@ -1,4 +1,5 @@
 const Diagnosis = require('../database/models/diagnosis-note.model');
+const Session = require('../database/models/patient-session.model');
 const X = require('../exceptions/operational.exception');
 
 module.exports = class DiagnosisService {

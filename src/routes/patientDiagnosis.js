@@ -7,6 +7,7 @@ const {
   HttpGetAllDiagnosis,
   HttpDeleteDiagnosis,
   HttpUpdateDiagnosis,
+  HTTPGetSessionDiagnosis,
 } = new PrescriptionController();
 
 diagnosisRouter.use(AuthService.protectRoute);
@@ -18,4 +19,5 @@ diagnosisRouter
   .get(HttpGetDiagnosis)
   .patch(HttpUpdateDiagnosis);
 
+diagnosisRouter.get('/session/:id', HTTPGetSessionDiagnosis);
 module.exports = diagnosisRouter;

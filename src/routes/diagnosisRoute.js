@@ -8,6 +8,7 @@ const {
   HTTPDeleteDiagnosis,
   HTTPEditDiagnosis,
   HTTPGetAllDiagnosis,
+  HTTPGetSessionDiagnosis,
 } = new Diagnosis();
 
 diagnosisRouter.use(Auth.protectRoute);
@@ -17,7 +18,5 @@ diagnosisRouter
   .route('/:id')
   .patch(HTTPEditDiagnosis)
   .delete(HTTPDeleteDiagnosis);
-
-diagnosisRouter;
 
 module.exports = diagnosisRouter;

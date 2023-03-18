@@ -1,5 +1,6 @@
 const Prescription = require('../database/models/prescription.model');
 const Diagnosis = require('../database/models/diagnosis.model');
+const Session = require('../database/models/patient-session.model');
 
 const X = require('../exceptions/operational.exception');
 
@@ -116,19 +117,62 @@ module.exports = class PrescriptionService {
     }
   }
 
-  static async getDiagnosisSession(sessionId) {
+  static async getSessionPrescriptions(session_id) {
     try {
-      const docs = await Diagnosis.find(sessionId);
-      return docs;
+      const session = await Session.findById(session_id)
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .select('status createdAt patient');
+
+      const docs = await Prescription.find({
+        sessionID: session_id,
+      })
+        .populate({
+          path: 'drugId',
+          select: 'name description price quantity type -_id',
+        })
+        .select('-__v -_id -patient -doctor');
+
+      if (!docs || !session) {
+        throw new X('Document not found', 404);
+      }
+
+      return {
+        session,
+        prescription: docs,
+      };
     } catch (error) {
       throw error;
     }
   }
 
-  static async getSessionPrescriptions(sessionId) {
+  static async getDiagnosisSession(session_id) {
     try {
-      const docs = await Prescription.find(sessionId);
-      return docs;
+      const session = await Session.findById(session_id)
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .select('status createdAt patient');
+
+      const docs = await Diagnosis.find({
+        sessionID: session_id,
+      })
+        .populate({
+          path: 'diagnosis',
+          select: 'title description -_id',
+        })
+        .select('-__v -_id -patient -doctor');
+
+      if (!docs || !session) {
+        throw new X('Document not found', 404);
+      }
+      return {
+        session,
+        diagnosis: docs,
+      };
     } catch (error) {
       throw error;
     }

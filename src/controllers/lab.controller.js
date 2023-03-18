@@ -50,4 +50,13 @@ module.exports = class LabController {
       next(error);
     }
   }
+
+  async HTTPGetLabSession(req, res, next) {
+    try {
+      const lab = await LabService.getLabSession(req.params.id);
+      return serverResponse(res, 200, lab);
+    } catch (error) {
+      next(error);
+    }
+  }
 };

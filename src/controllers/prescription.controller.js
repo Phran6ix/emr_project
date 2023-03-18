@@ -92,7 +92,20 @@ module.exports = class PrescriptionController {
 
   async HttpGetSessionPrescriptions(req, res, next) {
     try {
-      //
+      const prescription = await PrescriptionService.getSessionPrescriptions(
+        req.params.id
+      );
+      return serverResponse(res, 200, prescription);
+    } catch (error) {
+      next(error);
+    }
+  }
+  async HTTPGetSessionDiagnosis(req, res, next) {
+    try {
+      const diagnosis = await PrescriptionService.getDiagnosisSession(
+        req.params.id
+      );
+      return serverResponse(res, 200, diagnosis);
     } catch (error) {
       next(error);
     }
