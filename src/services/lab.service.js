@@ -65,9 +65,7 @@ module.exports = class TestService {
         })
         .select('status createdAt patient');
 
-      const docs = await LabTest.find({ sessionID: session_id }).select(
-        '-__v  '
-      );
+      const docs = await LabTest.find({ sessionID: session_id }).select('-__v');
 
       if (!docs || !session) {
         throw new X('Documents not found', 404);

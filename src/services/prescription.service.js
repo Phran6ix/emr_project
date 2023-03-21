@@ -131,9 +131,9 @@ module.exports = class PrescriptionService {
       })
         .populate({
           path: 'drugId',
-          select: 'name description price quantity type -_id',
+          select: 'name description price quantity type',
         })
-        .select('-__v -_id -patient -doctor');
+        .select('-__v -patient -doctor');
 
       if (!docs || !session) {
         throw new X('Document not found', 404);
@@ -162,9 +162,9 @@ module.exports = class PrescriptionService {
       })
         .populate({
           path: 'diagnosis',
-          select: 'title description -_id',
+          select: 'title description',
         })
-        .select('-__v -_id -patient -doctor');
+        .select('-__v -patient -doctor');
 
       if (!docs || !session) {
         throw new X('Document not found', 404);
