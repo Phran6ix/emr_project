@@ -4,11 +4,79 @@ const Prescription = require('../database/models/prescription.model');
 const { findByIdAndUpdate } = require('../database/models/lab-test.model');
 
 module.exports = class CashierService {
-  static async getAllPendingLabTestAndXray() {
+  static async getListOfPatient() {
     try {
-      const labs = await Lab.find({ concluded: false, paid: false });
-      const xrays = await Xray.find({ concluded: false, paid: false });
-      const prescription = await Prescription.find({ paid: false });
+      const labPatient = new Promise((res) => {
+        res(
+          Lab.find({ paid: false })
+            .populate({
+              path: 'patient',
+              select: 'name _id',
+            })
+            .select('patient -_id')
+        );
+      });
+
+      const xrayPatient = new Promise((res) => {
+        res(
+          Xray.find({ paid: false })
+            .populate({
+              path: 'patient',
+              select: 'name _id',
+            })
+            .select('patient -_id')
+        );
+      });
+
+      const prescription = new Promise((res) => {
+        res(
+          Prescription.find({ paid: false })
+            .populate({
+              path: 'patient',
+              select: 'name',
+            })
+            .select('patient -_id')
+        );
+      });
+
+      const RawPatient = await Promise.all([
+        labPatient,
+        xrayPatient,
+        prescription,
+      ]);
+
+      const patientArray = [
+        ...RawPatient[0],
+        ...RawPatient[1],
+        ...RawPatient[2],
+      ];
+
+      let patient;
+
+      patient = patientArray.map((patient) => {
+        return patient.patient;
+      });
+
+      const uniqueData = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return uniqueData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getPatientLabTestAndXray(query) {
+    try {
+      const labs = await Lab.find({ ...query, paid: false });
+      const xrays = await Xray.find({ ...query, paid: false });
+      const prescription = await Prescription.find({ ...query, paid: false });
 
       const response = {
         test: { labs, xrays },
