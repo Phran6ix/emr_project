@@ -36,6 +36,10 @@ const XRaySchema = Mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  price: {
+    type: Number,
+    required: [true, 'Price is required'],
+  },
 });
 
 module.exports = Mongoose.model('X-ray', XRaySchema);
