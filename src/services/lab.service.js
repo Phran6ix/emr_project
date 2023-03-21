@@ -66,7 +66,7 @@ module.exports = class TestService {
         .select('status createdAt patient');
 
       const docs = await LabTest.find({ sessionID: session_id }).select(
-        '-__v -_id '
+        '-__v  '
       );
 
       if (!docs || !session) {
