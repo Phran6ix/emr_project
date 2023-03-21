@@ -13,7 +13,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name _id',
             })
-            .select('patient -_id')
+            .select('patient sessionID')
         );
       });
 
@@ -24,7 +24,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name _id',
             })
-            .select('patient -_id')
+            .select('patient sessionID')
         );
       });
 
@@ -35,7 +35,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name',
             })
-            .select('patient -_id')
+            .select('patient sessionID')
         );
       });
 
@@ -54,7 +54,7 @@ module.exports = class CashierService {
       let patient;
 
       patient = patientArray.map((patient) => {
-        return patient.patient;
+        return { ...patient.patient._doc, session: patient.sessionID };
       });
 
       const uniqueData = patient.filter((item, index) => {
