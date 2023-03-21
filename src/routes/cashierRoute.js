@@ -12,6 +12,6 @@ cashierRoute.use(AuthService.protectRoute);
 
 cashierRoute.get('/list', HTTPGetPatientList);
 cashierRoute.get('/pending', HTTPgetPendingTestsAndPrescription);
-cashierRoute.patch('/payment/update/:id', HTTPApprovePending);
+cashierRoute.patch('/approve/payment/:id', HTTPApprovePending);
 
 module.exports = cashierRoute;

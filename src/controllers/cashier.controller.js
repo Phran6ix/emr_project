@@ -28,7 +28,7 @@ module.exports = class CashierController {
         req.body.type
       );
 
-      serverResponse(res, 200, { test, message: 'Updated Successfully' });
+      serverResponse(res, 200, test);
     } catch (error) {
       next(error);
     }

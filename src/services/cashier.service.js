@@ -2,6 +2,7 @@ const Lab = require('../database/models/lab-test.model');
 const Xray = require('../database/models/xray.model');
 const Prescription = require('../database/models/prescription.model');
 const { findByIdAndUpdate } = require('../database/models/lab-test.model');
+const X = require('../exceptions/operational.exception');
 
 module.exports = class CashierService {
   static async getListOfPatient() {
@@ -104,7 +105,12 @@ module.exports = class CashierService {
         default:
           throw Error('Invalid input');
       }
-      return test;
+
+      if (!test) {
+        throw new X('Document not found', 404);
+      }
+
+      return { message: 'Payment Approved' };
     } catch (error) {
       throw error;
     }
