@@ -18,12 +18,11 @@ const XRaySchema = Mongoose.Schema({
     ref: 'Session',
   },
 
-  title: {
-    type: String,
+  test: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'RawTest',
   },
-  description: {
-    type: String,
-  },
+
   result: {
     type: String,
   },
@@ -35,10 +34,6 @@ const XRaySchema = Mongoose.Schema({
   paid: {
     type: Boolean,
     default: false,
-  },
-  price: {
-    type: Number,
-    required: [true, 'Price is required'],
   },
 });
 

@@ -17,7 +17,11 @@ module.exports = class TestService {
     try {
       const doc = await LabTest.find({ paid: true, concluded: false })
         .populate({ path: 'patient', select: '-__v ' })
-        .populate({ path: 'doctor', select: '-__v -password' });
+        .populate({ path: 'doctor', select: '-__v -password' })
+        .populate({
+          path: 'test',
+          select: '-__v -_id',
+        });
 
       return doc;
     } catch (err) {
@@ -29,7 +33,11 @@ module.exports = class TestService {
     try {
       const doc = await LabTest.findById(filter)
         .populate({ path: 'patient', select: '-__v ' })
-        .populate({ path: 'doctor', select: '-__v -password' });
+        .populate({ path: 'doctor', select: '-__v -password' })
+        .populate({
+          path: 'test',
+          select: '-__v -_id',
+        });
       if (!doc) {
         return new X('Not found', 404);
       }
@@ -65,7 +73,12 @@ module.exports = class TestService {
         })
         .select('status createdAt patient');
 
-      const docs = await LabTest.find({ sessionID: session_id }).select('-__v');
+      const docs = await LabTest.find({ sessionID: session_id })
+        .populate({
+          path: 'test',
+          select: '-__v',
+        })
+        .select('-__v');
 
       if (!docs || !session) {
         throw new X('Documents not found', 404);

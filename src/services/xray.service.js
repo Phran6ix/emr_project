@@ -14,9 +14,13 @@ module.exports = class TestService {
 
   static async getAllPendingTests() {
     try {
-      const doc = await X_Ray.find({ concluded: false })
+      const doc = await X_Ray.find({ paid: true, concluded: false })
         .populate({ path: 'patient', select: 'name dob PID' })
-        .populate({ path: 'doctor', select: 'fullName role' });
+        .populate({ path: 'doctor', select: 'fullName role' })
+        .populate({
+          path: 'test',
+          select: '-__v',
+        });
 
       return doc;
     } catch (err) {
@@ -28,7 +32,11 @@ module.exports = class TestService {
     try {
       const doc = await X_Ray.findById(filter)
         .populate('patient', 'name dob PID')
-        .populate('doctor', 'fullName role ');
+        .populate('doctor', 'fullName role ')
+        .populate({
+          path: 'test',
+          select: '-__v',
+        });
       if (!doc) {
         return new X('Not found', 404);
       }
@@ -53,6 +61,34 @@ module.exports = class TestService {
         return new X('Not found', 404);
       }
       return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getXraySession(session_id) {
+    try {
+      const session = await Session.findById(session_id)
+        .populate({
+          path: 'patient',
+          select: 'name dob PID',
+        })
+        .select('status createdAt patient');
+
+      const docs = await X_Ray.find({ sessionID: session_id })
+        .populate({
+          path: 'test',
+          select: '-__v',
+        })
+        .select('-__v');
+
+      if (!docs || !session) {
+        throw new X('Documents not found', 404);
+      }
+      return {
+        session,
+        lab: docs,
+      };
     } catch (error) {
       throw error;
     }

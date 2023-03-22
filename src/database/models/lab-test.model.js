@@ -16,12 +16,12 @@ const TestSchema = Mongoose.Schema({
     type: Mongoose.Types.ObjectId,
     ref: 'Session',
   },
-  title: {
-    type: String,
+
+  test: {
+    type: Mongoose.Types.ObjectId,
+    ref: 'RawTest',
   },
-  description: {
-    type: String,
-  },
+
   result: {
     type: String,
   },
@@ -30,13 +30,10 @@ const TestSchema = Mongoose.Schema({
     type: Boolean,
     default: false,
   },
+
   concluded: {
     type: Boolean,
     default: false,
-  },
-  price: {
-    type: Number,
-    required: [true, 'Price is required'],
   },
 });
 

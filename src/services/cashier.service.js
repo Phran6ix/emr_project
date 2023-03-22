@@ -75,8 +75,14 @@ module.exports = class CashierService {
 
   static async getPatientLabTestAndXray(query) {
     try {
-      const labs = await Lab.find({ ...query, paid: false });
-      const xrays = await Xray.find({ ...query, paid: false });
+      const labs = await Lab.find({ ...query, paid: false }).populate({
+        path: 'test',
+        select: '-__v',
+      });
+      const xrays = await Xray.find({ ...query, paid: false }).populate({
+        path: 'test',
+        select: '-__v',
+      });
       const prescription = await Prescription.find({ ...query, paid: false });
 
       const response = {

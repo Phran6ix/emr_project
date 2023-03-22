@@ -13,6 +13,7 @@ const cashierRoute = require('../routes/cashierRoute');
 const sessionRoute = require('../routes/sessionRoute');
 const RawSymptomRoute = require('../routes/rawSymptomsRoute');
 const diagnosisRouter = require('../routes/diagnosisRoute');
+const RawTestRoute = require('../routes/raw_testRouter');
 
 version1.use('/api/v1/auth', AuthRouter);
 
@@ -27,6 +28,8 @@ version1.use('/api/v1/patients', patientRouter);
 version1.use('/api/v1/inventory', InventoryRouter);
 
 version1.use('/api/v1/prescriptions', prescriptionRouter);
+
+version1.use('/api/v1/test', RawTestRoute);
 
 version1.use('/api/v1/lab', labRouter);
 
