@@ -11,10 +11,10 @@ module.exports = class CashierService {
         res(
           Lab.find({ paid: false })
             .populate({
-              path: 'patient',
-              select: 'name _id',
+              path: 'doctor',
+              select: 'fullName _id',
             })
-            .select('patient sessionID')
+            .select('doctor')
         );
       });
 
@@ -22,10 +22,10 @@ module.exports = class CashierService {
         res(
           Xray.find({ paid: false })
             .populate({
-              path: 'patient',
-              select: 'name _id',
+              path: 'doctor',
+              select: 'fullName _id',
             })
-            .select('patient sessionID')
+            .select('doctor')
         );
       });
 
@@ -33,10 +33,78 @@ module.exports = class CashierService {
         res(
           Prescription.find({ paid: false })
             .populate({
-              path: 'patient',
-              select: 'name',
+              path: 'doctor',
+              select: 'fullName _id',
             })
-            .select('patient sessionID')
+            .select('doctor')
+        );
+      });
+
+      const RawPatient = await Promise.all([
+        labPatient,
+        xrayPatient,
+        prescription,
+      ]);
+
+      const patientArray = [
+        ...RawPatient[0],
+        ...RawPatient[1],
+        ...RawPatient[2],
+      ];
+
+      let patient;
+
+      patient = patientArray.map((patient) => {
+        return { ...patient.doctor._doc, session: patient.sessionID };
+      });
+
+      const uniqueData = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return uniqueData;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getDoctorsPatient(doctorId) {
+    try {
+      const labPatient = new Promise((res) => {
+        res(
+          Lab.find({ paid: false, doctor: doctorId })
+            .populate({
+              path: 'patient',
+              select: 'name _id',
+            })
+            .select('doctor')
+        );
+      });
+
+      const xrayPatient = new Promise((res) => {
+        res(
+          Xray.find({ paid: false, doctor: doctorId })
+            .populate({
+              path: 'patient',
+              select: 'name _id',
+            })
+            .select('doctor')
+        );
+      });
+
+      const prescription = new Promise((res) => {
+        res(
+          Prescription.find({ paid: false, doctor: doctorId })
+            .populate({
+              path: 'patient',
+              select: 'name _id',
+            })
+            .select('doctor')
         );
       });
 
@@ -68,8 +136,8 @@ module.exports = class CashierService {
       });
 
       return uniqueData;
-    } catch (error) {
-      throw error;
+    } catch (err) {
+      throw err;
     }
   }
 

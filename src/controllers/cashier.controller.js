@@ -33,4 +33,13 @@ module.exports = class CashierController {
       next(error);
     }
   }
+
+  async HTTPGetDoctorsPatient(req, res, next) {
+    try {
+      const patient = await CashierService.getDoctorsPatient(req.query.doctor);
+      serverResponse(res, 200, patient);
+    } catch (error) {
+      next(error);
+    }
+  }
 };

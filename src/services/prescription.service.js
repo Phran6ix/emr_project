@@ -177,4 +177,25 @@ module.exports = class PrescriptionService {
       throw error;
     }
   }
+
+  static async getPaidPrescription() {
+    try {
+      const prescription = await Prescription.find({ paid: true })
+        .populate({
+          path: 'drugId',
+          select: 'name',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name',
+        })
+        .populate({
+          path: 'doctor',
+          select: 'fullName',
+        });
+      return prescription;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
