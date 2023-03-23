@@ -82,7 +82,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name _id',
             })
-            .select('doctor')
+            .select('doctor sessionID')
         );
       });
 
@@ -93,7 +93,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name _id',
             })
-            .select('doctor')
+            .select('doctor sessionID')
         );
       });
 
@@ -104,7 +104,7 @@ module.exports = class CashierService {
               path: 'patient',
               select: 'name _id',
             })
-            .select('doctor')
+            .select('doctor sessionID')
         );
       });
 
