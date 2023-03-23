@@ -71,7 +71,7 @@ module.exports = class TestService {
           path: 'patient',
           select: 'name dob PID',
         })
-        .select('status createdAt patient');
+        .select('status createdAt patient _id');
 
       const docs = await LabTest.find({ sessionID: session_id })
         .populate({
