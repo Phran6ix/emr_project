@@ -123,6 +123,7 @@ module.exports = class CashierService {
       let patient;
 
       patient = patientArray.map((patient) => {
+        console.log('e');
         return { ...patient.patient._doc, session: patient.sessionID };
       });
 
