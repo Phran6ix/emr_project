@@ -159,7 +159,6 @@ module.exports = class CashierService {
         path: 'drugId',
         select: '-__v',
       });
-      x;
 
       const response = {
         test: { labs, xrays },
