@@ -152,7 +152,14 @@ module.exports = class CashierService {
         path: 'test',
         select: '-__v',
       });
-      const prescription = await Prescription.find({ ...query, paid: false });
+      const prescription = await Prescription.find({
+        ...query,
+        paid: false,
+      }).populate({
+        path: 'drugId',
+        select: '-__v',
+      });
+      x;
 
       const response = {
         test: { labs, xrays },
