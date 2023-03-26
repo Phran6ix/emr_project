@@ -20,7 +20,7 @@ const XRaySchema = Mongoose.Schema({
 
   test: {
     type: Mongoose.Types.ObjectId,
-    ref: 'RawTest',
+    ref: 'Inventory',
   },
 
   result: {
