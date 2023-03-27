@@ -119,4 +119,15 @@ module.exports = class PrescriptionController {
       next(error);
     }
   }
+
+  async HTTPDisperseDrugs(req, res, next) {
+    try {
+      const disperse = await PrescriptionService.dispersePrescription(
+        req.params.id
+      );
+      serverResponse(res, 200, { message: 'Dispersed successful' });
+    } catch (error) {
+      next(error);
+    }
+  }
 };

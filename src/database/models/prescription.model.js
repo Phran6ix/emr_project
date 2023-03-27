@@ -18,6 +18,10 @@ const prescriptionSchema = Mongoose.Schema({
     default: false,
   },
 
+  dispersed: {
+    type: Boolean,
+    default: false,
+  },
   // relations
   drugId: {
     type: Mongoose.Types.ObjectId,

@@ -34,7 +34,7 @@ module.exports = class CashierService {
           Prescription.find({ paid: false })
             .populate({
               path: 'doctor',
-              select: 'fullName _id',
+              select: 'fullName _id -',
             })
             .select('doctor')
         );
@@ -155,6 +155,7 @@ module.exports = class CashierService {
       const prescription = await Prescription.find({
         ...query,
         paid: false,
+        dispersed: false,
       }).populate({
         path: 'drugId',
         select: '-__v',

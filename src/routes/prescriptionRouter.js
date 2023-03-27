@@ -8,6 +8,7 @@ const {
   HttpUpdatePrescription,
   HttpGetSessionPrescriptions,
   HTTPGetPaidPrescription,
+  HTTPDisperseDrugs,
 } = new PrescriptionController();
 
 prescriptionRouter.use(AuthService.protectRoute);
@@ -21,6 +22,8 @@ prescriptionRouter
   .get(HttpGetPrescription)
   .patch(HttpUpdatePrescription)
   .delete(HttpDeletePrescription);
+
+prescriptionRouter.patch('/disperse/:id', HTTPDisperseDrugs);
 
 prescriptionRouter.get('/session/:id', HttpGetSessionPrescriptions);
 

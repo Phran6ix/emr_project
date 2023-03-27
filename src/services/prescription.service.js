@@ -180,7 +180,10 @@ module.exports = class PrescriptionService {
 
   static async getPaidPrescription() {
     try {
-      const prescription = await Prescription.find({ paid: true })
+      const prescription = await Prescription.find({
+        paid: true,
+        dispersed: false,
+      })
         .populate({
           path: 'drugId',
           select: 'name',
@@ -193,6 +196,23 @@ module.exports = class PrescriptionService {
           path: 'doctor',
           select: 'fullName',
         });
+      return prescription;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async dispersePrescription(prescription_id) {
+    try {
+      const prescription = await Prescription.findById(prescription_id);
+      if (prescription.paid == false)
+        throw new X(
+          'Prescription has not been approved, reach out to cashier',
+          400
+        );
+
+      prescription.dispersed = true;
+      await prescription.save();
       return prescription;
     } catch (error) {
       throw error;
