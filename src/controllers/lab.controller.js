@@ -32,10 +32,10 @@ module.exports = class LabController {
 
   async HTTPUploadResult(req, res, next) {
     try {
-      const response = await LabService.uploadResult(
-        { id: req.params.id },
-        { result: req.body.result, concluded: true }
-      );
+      const response = await LabService.uploadResult(req.params.id, {
+        concluded: true,
+        result: req.body.result,
+      });
       serverResponse(res, 200, { message: 'Upload successful' });
     } catch (error) {
       next(error);
