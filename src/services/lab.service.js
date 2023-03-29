@@ -49,6 +49,9 @@ module.exports = class TestService {
   static async uploadResult(filter, payload) {
     try {
       const test = await LabTest.findOneAndUpdate(filter, payload);
+      if (!test) {
+        throw new X('Document not found', 404);
+      }
       return test;
     } catch (err) {
       throw err;
