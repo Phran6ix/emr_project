@@ -58,6 +58,7 @@ module.exports = class StaffController {
 
   async HTTPGetOnlineStaffs(req, res, next) {
     try {
+      console.log(req.query);
       const onlinestaff = await StaffService.getOnlineStaffs(req.query);
       return serverResponse(res, 200, onlinestaff);
     } catch (error) {
