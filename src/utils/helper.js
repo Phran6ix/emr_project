@@ -50,10 +50,26 @@ function dumbBio() {
   };
 }
 
+function checkStaffClock(clockIn, clockOut) {
+  const now = new Date();
+  const currentHours = now.getHours() * 100;
+  const currentMinute = now.getMinutes();
+  const currentTime = currentHours + currentMinute;
+
+  clockIn = +clockIn.split(':').join('');
+  clockOut = +clockOut.split(':').join('');
+
+  if (currentTime > clockOut || currentTime < clockIn) {
+    return false;
+  }
+  return true;
+}
+
 module.exports = {
   dumbBio,
   signToken,
   dumbStaff,
   verifyToken,
   dumbPatient,
+  checkStaffClock,
 };

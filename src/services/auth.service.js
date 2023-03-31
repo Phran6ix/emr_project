@@ -1,6 +1,6 @@
 const Staff = require('../database/models/staff.model');
 const X = require('../exceptions/operational.exception');
-const { verifyToken } = require('../utils/helper');
+const { verifyToken, checkStaffClock } = require('../utils/helper');
 
 module.exports = class AuthService {
   static async protectRoute(req, res, next) {
@@ -43,6 +43,13 @@ module.exports = class AuthService {
 
       if (!user.status)
         throw new X('You are not authorized. Reach out to the admin', 403);
+
+      const checkStaffTime = checkStaffClock(user.clockIn, user.clockOut);
+      if (!checkStaffTime)
+        throw new X(
+          `You are not allowed to sign into the platform at this moment, check back at ${user.clockIn}`,
+          403
+        );
       return user;
     } catch (error) {
       throw error;
