@@ -54,7 +54,11 @@ module.exports = class PatientService {
 
   static async getAllBioData() {
     try {
-      let docs = await BioData.find();
+      let docs = await BioData.find().populate({
+        path: 'patient',
+        select: 'name dob email phoneNumber',
+      });
+
       docs = docs.map((doc) => dumbBio.call(doc));
       return docs;
     } catch (error) {
@@ -73,7 +77,10 @@ module.exports = class PatientService {
 
   static async getOnePatientBio(patient_id) {
     try {
-      const doc = await BioData.findOne({ patient_id });
+      const doc = await BioData.findOne({ patient: patient_id }).populate({
+        path: 'patient',
+        select: 'name dob email phoneNumber',
+      });
       if (!doc)
         throw new X('no patient bio-data found with the provided id', 404);
       return dumbBio.call(doc);
@@ -84,7 +91,10 @@ module.exports = class PatientService {
 
   static async updatePatientBio(patientId, payload) {
     try {
-      const doc = await BioData.findByIdAndUpdate(patientId, payload);
+      const doc = await BioData.findOneAndUpdate(
+        { patient: patientId },
+        payload
+      );
       return dumbBio.call(doc);
     } catch (error) {
       throw error;

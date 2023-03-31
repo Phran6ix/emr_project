@@ -38,7 +38,7 @@ function dumbPatient() {
 
 function dumbBio() {
   return {
-    patient_id: this.patient_id,
+    patient: this.patient,
     bio_id: this._id,
     sex: this.sex,
     age: this.age,

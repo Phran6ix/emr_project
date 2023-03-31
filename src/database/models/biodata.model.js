@@ -1,8 +1,9 @@
 const Mongoose = require('mongoose');
 const BioDataSchema = Mongoose.Schema({
-  patient_id: {
+  patient: {
     type: Mongoose.Types.ObjectId,
     required: [true, 'patient_id is required'],
+    ref: 'Patient',
   },
   age: {
     type: String,

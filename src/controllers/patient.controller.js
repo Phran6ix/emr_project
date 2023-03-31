@@ -80,7 +80,7 @@ module.exports = class PatientController {
         req.params.id,
         req.body
       );
-      return serverResponse(res, 200, resp);
+      return serverResponse(res, 200, { message: 'Updated Successfully' });
     } catch (error) {
       next(error);
     }
