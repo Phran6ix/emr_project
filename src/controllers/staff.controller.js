@@ -76,4 +76,17 @@ module.exports = class StaffController {
       next(error);
     }
   }
+
+  async HTTPSetStaffClock(req, res, next) {
+    try {
+      const setClock = await StaffService.setStaffClock(
+        req.params.staffId,
+        req.body
+      );
+
+      return serverResponse(res, 200, { message: 'Updated successfully' });
+    } catch (error) {
+      next(error);
+    }
+  }
 };

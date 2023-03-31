@@ -44,11 +44,11 @@ const staffSchema = Mongoose.Schema(
     },
 
     clockIn: {
-      type: Date,
+      type: String,
     },
 
     clockOut: {
-      type: Date,
+      type: String,
     },
   },
   {

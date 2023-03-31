@@ -19,6 +19,8 @@ staffRouter
   .patch(RestrictAccess('admin'), Staff.HttpUpdateStaff)
   .delete(RestrictAccess('admin'), Staff.HttpDeleteStaff);
 
+staffRouter.patch('/set-clock/:staffId', Staff.HTTPSetStaffClock);
+
 staffRouter.patch('/status/:id', Staff.HTTPrevokeOrGrant);
 staffRouter.get('/info/:id', Staff.HttpGetOneStaff);
 

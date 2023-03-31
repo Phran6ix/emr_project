@@ -89,4 +89,19 @@ module.exports = class StaffService {
       throw error;
     }
   }
+
+  static async setStaffClock(staff_id, payload) {
+    try {
+      const staff = await Staff.findById(staff_id);
+      if (!staff) throw new X('Staff document not found', 404);
+
+      staff.clockIn = payload.clockIn;
+      staff.clockOut = payload.clockOut;
+
+      await staff.save();
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
 };
