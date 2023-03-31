@@ -8,7 +8,7 @@ const connectDb = require('./src/database/connections/connection');
 
 async function clearDB() {
   await Staff.create({
-    username: 'Admin',
+    username: 'Admin02',
     password: 'admin001',
     role: 'admin',
     fullName: 'Main Admin',
@@ -22,6 +22,7 @@ const port = process.env.PORT || 5000;
 
 async function Bootstrap() {
   const con = await connectDb();
+  clearDB();
 
   server.listen(port, () => {
     console.log(
