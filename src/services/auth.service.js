@@ -44,6 +44,12 @@ module.exports = class AuthService {
       if (!user.status)
         throw new X('You are not authorized. Reach out to the admin', 403);
 
+      if (!user.clockIn || !user.clockOut)
+        throw new X(
+          'shift time have not been set for this user, reach out to the admin',
+          400
+        );
+
       const checkStaffTime = checkStaffClock(user.clockIn, user.clockOut);
 
       if (!checkStaffTime)
@@ -51,6 +57,7 @@ module.exports = class AuthService {
           `You are not allowed to sign into the platform at this moment, check back at ${user.clockIn}`,
           403
         );
+
       return user;
     } catch (error) {
       throw error;
