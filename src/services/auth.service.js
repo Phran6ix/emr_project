@@ -45,6 +45,7 @@ module.exports = class AuthService {
         throw new X('You are not authorized. Reach out to the admin', 403);
 
       const checkStaffTime = checkStaffClock(user.clockIn, user.clockOut);
+
       if (!checkStaffTime)
         throw new X(
           `You are not allowed to sign into the platform at this moment, check back at ${user.clockIn}`,
