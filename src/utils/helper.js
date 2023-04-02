@@ -52,10 +52,10 @@ function dumbBio() {
 
 function checkStaffClock(clockIn, clockOut) {
   const now = new Date();
+  now.setUTCHours(1);
   const currentHours = now.getHours() * 100;
   const currentMinute = now.getMinutes();
   const currentTime = currentHours + currentMinute;
-  const current = `${currentHours}:${currentMinute}`;
 
   clockIn = clockIn.split(':');
   clockOut = clockOut.split(':');
