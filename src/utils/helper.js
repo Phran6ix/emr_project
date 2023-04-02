@@ -63,10 +63,6 @@ function checkStaffClock(clockIn, clockOut) {
   const IntclockIn = +clockIn.join('');
   const IntclockOut = +clockOut.join('');
 
-  const nowTime = new Date();
-  const setClockIn = new Date().setHours(+clockIn[0], +clockIn[1]);
-  const setClockOut = new Date().setHours(+clockOut[0], +clockOut[1]);
-
   // CHECK FOR BEFORE SHIFT
   if (currentTime < IntclockIn) {
     return false;
