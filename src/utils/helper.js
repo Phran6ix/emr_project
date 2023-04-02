@@ -67,10 +67,6 @@ function checkStaffClock(clockIn, clockOut) {
   const setClockIn = new Date().setHours(+clockIn[0], +clockIn[1]);
   const setClockOut = new Date().setHours(+clockOut[0], +clockOut[1]);
 
-  // if (nowTime.getTime() < setClockIn) {
-  //   return false;
-  // }
-
   // CHECK FOR BEFORE SHIFT
   if (currentTime < IntclockIn) {
     return false;
@@ -79,10 +75,8 @@ function checkStaffClock(clockIn, clockOut) {
   // check if the shift extends to the next day
   const nextDay = IntclockOut < IntclockIn;
 
-  // if the shift doesnot extend to the next day
   if (!nextDay) {
     if (currentTime > IntclockOut) {
-      // if (nowTime.getTime() > setClockOut) {
       return false;
     }
   }
