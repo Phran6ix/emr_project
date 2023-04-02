@@ -55,7 +55,7 @@ function checkStaffClock(clockIn, clockOut) {
 
   // console.log(now);
   // now.setUTCHours(10);
-  const currentHours = now.getHours() * 100;
+  const currentHours = now.getHours() + 1 * 100;
   const currentMinute = now.getMinutes();
   const currentTime = currentHours + currentMinute;
 
