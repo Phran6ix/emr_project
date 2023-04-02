@@ -5,10 +5,13 @@ const { signToken, dumbStaff } = require('../utils/helper');
 const now = new Date();
 
 // console.log(now);
-// now.setUTCHours(10);
-const currentHours = now.getHours() + 1 * 100;
+
+console.log(now.getTimezoneOffset());
+console.log(now, now.getHours());
+const currentHours = (now.getHours() + 1) * 100;
 const currentMinute = now.getMinutes();
 const currentTime = currentHours + currentMinute;
+console.log(currentTime);
 
 module.exports = class AuthController {
   async HttpLoginStaff(req, res, next) {
@@ -18,7 +21,7 @@ module.exports = class AuthController {
         res,
         200,
         dumbStaff.call(resp),
-        currentTime,
+        { currentTime, now },
         `Bearer ${await signToken(resp._id)}`
       );
     } catch (error) {
