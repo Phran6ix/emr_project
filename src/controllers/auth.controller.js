@@ -4,12 +4,6 @@ const { signToken, dumbStaff } = require('../utils/helper');
 
 const now = new Date();
 
-// console.log(now);
-// now.setUTCHours(10);
-const currentHours = now.getHours() * 100;
-const currentMinute = now.getMinutes();
-const currentTime = currentHours + currentMinute;
-
 module.exports = class AuthController {
   async HttpLoginStaff(req, res, next) {
     try {
