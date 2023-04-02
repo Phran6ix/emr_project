@@ -52,7 +52,8 @@ function dumbBio() {
 
 function checkStaffClock(clockIn, clockOut) {
   const now = new Date();
-  now.setUTCHours(1);
+
+  now.setUTCHours(10);
   const currentHours = now.getHours() * 100;
   const currentMinute = now.getMinutes();
   const currentTime = currentHours + currentMinute;
