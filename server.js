@@ -2,7 +2,6 @@ require('dotenv').config();
 const http = require('http');
 const App = require('./app');
 const Staff = require('./src/database/models/staff.model');
-const Symptom = require('./src/database/models/symptom.model');
 
 const connectDb = require('./src/database/connections/connection');
 
