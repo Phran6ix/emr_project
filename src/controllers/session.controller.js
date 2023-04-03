@@ -12,6 +12,17 @@ module.exports = class SessionController {
     }
   }
 
+  async HTTPGetSessionOnPatient(req, res, next) {
+    try {
+      const response = await SessionService.getSessionsonPatient({
+        patient: req.query.patient,
+      });
+      return serverResponse(res, 200, response);
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async HTTPGetSession(req, res, next) {
     try {
       const session = await SessionService.getSession({

@@ -22,6 +22,15 @@ module.exports = class SessionService {
     }
   }
 
+  static async getSessionsonPatient(patient) {
+    try {
+      const sessions = await Session.find(patient).select('-status');
+      return sessions;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getSession(filter) {
     try {
       const labs = new Promise((res) => {
@@ -84,16 +93,15 @@ module.exports = class SessionService {
 
       const diagnosis = new Promise((res) => {
         res(
-          Diagnosis.findOne(filter).populate({
-            populate: {
+          Diagnosis.findOne(filter)
+            .populate({
               path: 'patient',
               select: 'name dob PID',
-            },
-            populate: {
-              path: 'diagonisis',
+            })
+            .populate({
+              path: 'diagnosis',
               select: 'title description',
-            },
-          })
+            })
         );
       });
 
@@ -105,6 +113,9 @@ module.exports = class SessionService {
         diagnosis,
       ]);
 
+      if (!response) {
+        throw new X('An Error occured, check the session id', 404);
+      }
       const data = {
         Symptoms: response[2],
         diagnosis: response[4],

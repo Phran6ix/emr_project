@@ -13,6 +13,7 @@ const DiagnosisSchema = Mongoose.Schema({
   sessionID: {
     type: Mongoose.Types.ObjectId,
     required: true,
+    ref: 'Session',
   },
 
   patient: {
