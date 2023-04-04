@@ -81,6 +81,14 @@ module.exports = class TestService {
           path: 'test',
           select: '-__v',
         })
+        .populate({
+          path: 'doctor',
+          select: 'fullName role',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name ',
+        })
         .select('-__v');
 
       if (!docs || !session) {

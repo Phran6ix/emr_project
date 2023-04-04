@@ -45,7 +45,8 @@ module.exports = class symptomService {
           path: 'patient',
           select: 'name dob PID',
         })
-        .select('status createdAt patient');
+
+        .select('status createdAt patient note symptom');
 
       const docs = await PatientSymptom.find({
         sessionID: session_id,

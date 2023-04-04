@@ -133,7 +133,11 @@ module.exports = class PrescriptionService {
           path: 'drugId',
           select: 'name description price quantity type',
         })
-        .select('-__v -patient -doctor');
+        .populate({
+          path: 'doctor',
+          select: 'fullName role ',
+        })
+        .select('-__v');
 
       if (!docs || !session) {
         throw new X('Document not found', 404);
