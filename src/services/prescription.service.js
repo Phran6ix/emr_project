@@ -102,7 +102,7 @@ module.exports = class PrescriptionService {
   static async deleteDiagnosis(diagnosis_id) {
     try {
       const doc = await Diagnosis.findByIdAndDelete(diagnosis_id);
-      if (!doc) throw new X('no doc found with the provided id', 404);
+      if (!doc) throw new X('no doc found with the provided id ', 404);
       return doc;
     } catch (error) {
       throw error;
