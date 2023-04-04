@@ -45,7 +45,6 @@ module.exports = class symptomService {
           path: 'patient',
           select: 'name dob PID',
         })
-
         .select('status createdAt patient note symptom');
 
       const docs = await PatientSymptom.find({
@@ -55,7 +54,7 @@ module.exports = class symptomService {
           path: 'symptom',
           select: 'title description -_id',
         })
-        .select('symptom note');
+        .select('symptom note ');
 
       if (!docs || !session) {
         throw new X('Document not found', 404);

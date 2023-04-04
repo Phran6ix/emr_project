@@ -83,7 +83,7 @@ module.exports = class TestService {
         })
         .populate({
           path: 'doctor',
-          select: 'fullName role',
+          select: 'fullName role ',
         })
         .populate({
           path: 'patient',
