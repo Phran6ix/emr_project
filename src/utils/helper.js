@@ -65,17 +65,17 @@ function checkStaffClock(clockIn, clockOut) {
 
   const IntclockIn = +clockIn.join('');
   const IntclockOut = +clockOut.join('');
-
-  // CHECK FOR BEFORE SHIFT
-  if (currentTime < IntclockIn) {
-    return false;
-  }
-
-  // check if the shift extends to the next day
   const nextDay = IntclockOut < IntclockIn;
 
+  // CHECK FOR BEFORE SHIFT
+  // if (currentTime < IntclockIn) {
+  //   return false;
+  // }
+
+  // check if the shift extends to the next day
+
   if (!nextDay) {
-    if (currentTime > IntclockOut) {
+    if (currentTime < IntclockIn || currentTime > IntclockOut) {
       return false;
     }
   }
