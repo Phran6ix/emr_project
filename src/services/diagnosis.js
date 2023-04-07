@@ -23,9 +23,7 @@ module.exports = class DiagnosisService {
 
   static async getDiagnosisById(id) {
     try {
-      const diagnosis = await Diagnosis.findById(id).select(
-        'title description'
-      );
+      const diagnosis = await Diagnosis.findById(id).select('title');
 
       if (!diagnosis) {
         throw new X('Doc not found', 404);

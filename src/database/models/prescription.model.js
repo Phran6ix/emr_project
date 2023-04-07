@@ -18,6 +18,10 @@ const prescriptionSchema = Mongoose.Schema({
     default: false,
   },
 
+  description: {
+    type: String,
+  },
+
   dispersed: {
     type: Boolean,
     default: false,

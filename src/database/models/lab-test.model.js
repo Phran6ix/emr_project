@@ -22,6 +22,10 @@ const TestSchema = Mongoose.Schema({
     ref: 'Inventory',
   },
 
+  description: {
+    type: String,
+  },
+
   result: {
     type: String,
   },

@@ -5,6 +5,10 @@ const DiagnosisSchema = Mongoose.Schema({
     type: String,
   },
 
+  description: {
+    type: String,
+  },
+
   diagnosis: {
     type: Mongoose.Types.ObjectId,
     ref: 'DiagNote',

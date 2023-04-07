@@ -7,10 +7,6 @@ const rawTestSchema = Schema({
     unique: [true, 'This test already exists'],
   },
 
-  description: {
-    type: String,
-    required: [true, 'Description is required'],
-  },
   price: {
     type: Number,
     required: [true, 'Price is required'],

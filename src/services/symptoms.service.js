@@ -19,7 +19,7 @@ module.exports = class symptomService {
         payload
       ).populate({
         path: 'symptom',
-        select: 'title description',
+        select: 'title',
       });
       if (!doc) throw new X('no symptom found with the provided id', 404);
       return doc;
@@ -52,9 +52,9 @@ module.exports = class symptomService {
       })
         .populate({
           path: 'symptom',
-          select: 'title description -_id',
+          select: '-_id',
         })
-        .select('symptom note ');
+        .select('symptom note description');
 
       if (!docs || !session) {
         throw new X('Document not found', 404);
@@ -73,7 +73,7 @@ module.exports = class symptomService {
       const doc = await PatientSymptom.findById(symptom_id)
         .populate({
           path: 'symptom',
-          select: 'title description',
+          select: 'title',
         })
         .populate({
           path: 'patient',
@@ -87,6 +87,7 @@ module.exports = class symptomService {
           path: 'sessionID',
           select: '-__v -_id',
         });
+
       if (!doc) throw new X('no symptom found with the provided id', 404);
       return doc;
     } catch (error) {

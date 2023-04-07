@@ -49,7 +49,7 @@ module.exports = class PrescriptionService {
       const doc = await Diagnosis.findById(diagnosis_id)
         .populate({
           path: 'diagnosis',
-          select: 'title description',
+          select: 'title',
         })
         .populate({
           path: 'patient',
@@ -59,6 +59,7 @@ module.exports = class PrescriptionService {
           path: 'doctor',
           select: 'username role fullName online status',
         });
+
       if (!doc) throw new X('no doc found with the provided id', 404);
       return doc;
     } catch (error) {
@@ -81,7 +82,7 @@ module.exports = class PrescriptionService {
       const doc = await Diagnosis.find()
         .populate({
           path: 'diagnosis',
-          select: 'title description',
+          select: 'title',
         })
         .populate({
           path: 'patient',
@@ -131,7 +132,7 @@ module.exports = class PrescriptionService {
       })
         .populate({
           path: 'drugId',
-          select: 'name description price quantity type',
+          select: 'name price quantity type',
         })
         .populate({
           path: 'doctor',
@@ -166,7 +167,7 @@ module.exports = class PrescriptionService {
       })
         .populate({
           path: 'diagnosis',
-          select: 'title description',
+          select: 'title',
         })
         .select('-__v -patient -doctor');
 

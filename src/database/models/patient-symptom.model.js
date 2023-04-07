@@ -12,6 +12,9 @@ const SymptomsSchema = Mongoose.Schema({
     default: false,
   },
 
+  description: {
+    type: String,
+  },
   patient: {
     type: Mongoose.Types.ObjectId,
     ref: 'Patient',

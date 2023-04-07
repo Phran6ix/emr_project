@@ -6,10 +6,6 @@ const symptomSchema = Schema({
     required: [true, 'A symtpom must have a title'],
     umique: true,
   },
-  description: {
-    type: String,
-    required: [true, 'A symtpom must have a title'],
-  },
 });
 
 module.exports = model('Symptom', symptomSchema);
