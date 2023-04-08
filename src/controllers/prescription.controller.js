@@ -113,8 +113,20 @@ module.exports = class PrescriptionController {
 
   async HTTPGetPaidPrescription(req, res, next) {
     try {
-      const prescription = await PrescriptionService.getPaidPrescription();
-      serverResponse(res, 200, prescription);
+      const patients = await PrescriptionService.getPaidPrescription();
+      serverResponse(res, 200, patients);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HTTPGetPatientPrescription(req, res, next) {
+    try {
+      const prescription = await PrescriptionService.getPaidPatientPrescription(
+        req.params.id
+      );
+
+      return serverResponse(res, 200, prescription);
     } catch (error) {
       next(error);
     }

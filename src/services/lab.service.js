@@ -23,7 +23,20 @@ module.exports = class TestService {
           select: '-__v -_id',
         });
 
-      return doc;
+      const patient = doc.map((document) => {
+        return { ...document.patient._doc };
+      });
+
+      const filterPatient = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return filterPatient;
     } catch (err) {
       throw err;
     }
@@ -31,7 +44,7 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await LabTest.findById(filter)
+      const doc = await LabTest.find({ patient: filter })
         .populate({ path: 'patient', select: '-__v ' })
         .populate({ path: 'doctor', select: '-__v -password' })
         .populate({

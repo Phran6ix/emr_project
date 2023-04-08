@@ -9,6 +9,7 @@ const {
   HttpGetSessionPrescriptions,
   HTTPGetPaidPrescription,
   HTTPDisperseDrugs,
+  HTTPGetPatientPrescription,
 } = new PrescriptionController();
 
 prescriptionRouter.use(AuthService.protectRoute);
@@ -16,6 +17,7 @@ prescriptionRouter.use(AuthService.protectRoute);
 prescriptionRouter.route('/').post(HttpAddPrescription);
 
 prescriptionRouter.get('/patient', HTTPGetPaidPrescription);
+prescriptionRouter.get('/patient/:id', HTTPGetPatientPrescription);
 
 prescriptionRouter
   .route('/:id')

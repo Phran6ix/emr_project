@@ -201,6 +201,34 @@ module.exports = class PrescriptionService {
           path: 'doctor',
           select: 'fullName',
         });
+
+      const patient = prescription.map((document) => {
+        return { ...document.patient._doc };
+      });
+
+      const filterPatient = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return filterPatient;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getPaidPatientPrescription(patient_id) {
+    try {
+      const prescription = await Prescription.find({
+        paid: true,
+        dispersed: false,
+        patient: patient_id,
+      });
+
       return prescription;
     } catch (error) {
       throw error;

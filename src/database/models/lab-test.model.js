@@ -27,7 +27,12 @@ const TestSchema = Mongoose.Schema({
   },
 
   result: {
-    type: String,
+    result: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
   },
 
   paid: {
