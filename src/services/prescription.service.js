@@ -1,5 +1,6 @@
 const Prescription = require('../database/models/prescription.model');
 const Diagnosis = require('../database/models/diagnosis.model');
+const Inventory = require('../database/models/inventory.model');
 const Session = require('../database/models/patient-session.model');
 
 const X = require('../exceptions/operational.exception');
@@ -7,7 +8,16 @@ const X = require('../exceptions/operational.exception');
 module.exports = class PrescriptionService {
   static async addPrescription(payload) {
     try {
+      const inventory = await Inventory.findById(payload.drugId);
+
+      if (inventory.quantity < payload.quantity) {
+        throw new X('Out of stock', 400);
+      }
+
+      inventory.quantity = inventory.quantity - payload.quantity;
+
       const doc = await Prescription.create(payload);
+      await inventory.save();
       return doc;
     } catch (error) {
       throw error;

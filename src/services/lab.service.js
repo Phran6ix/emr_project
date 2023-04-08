@@ -1,12 +1,20 @@
 const { findByIdAndDelete } = require('../database/models/lab-test.model');
 const LabTest = require('../database/models/lab-test.model');
+const Inventory = require('../database/models/inventory.model');
 const Session = require('../database/models/patient-session.model');
 const X = require('../exceptions/operational.exception');
 
 module.exports = class TestService {
   static async createTest(payload) {
     try {
+      const test = await Inventory.findById(payload.test);
+      if (test.quantity < 1) {
+        throw new X('Out of Stock', 400);
+      }
+
       const doc = await LabTest.create(payload);
+      test.quantity -= 1;
+      await test.save();
       return doc;
     } catch (err) {
       throw err;

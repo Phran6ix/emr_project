@@ -15,6 +15,8 @@ const RawSymptomRoute = require('../routes/rawSymptomsRoute');
 const diagnosisRouter = require('../routes/diagnosisRoute');
 const RawTestRoute = require('../routes/raw_testRouter');
 
+const historyRouter = require('../routes/historyRoute');
+
 version1.use('/api/v1/auth', AuthRouter);
 
 version1.use('/api/v1/staff', staffRouter);
@@ -44,4 +46,6 @@ version1.use('/api/v1/session', sessionRoute);
 version1.use('/api/v1/symptom', RawSymptomRoute);
 
 version1.use('/api/v1/diagnosis', diagnosisRouter);
+
+version1.use('/api/v1/history', historyRouter);
 module.exports = version1;
