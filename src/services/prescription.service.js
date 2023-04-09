@@ -237,6 +237,9 @@ module.exports = class PrescriptionService {
         paid: true,
         dispersed: false,
         patient: patient_id,
+      }).populate({
+        path: 'drugId',
+        select: 'name price type',
       });
 
       return prescription;

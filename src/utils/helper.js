@@ -55,7 +55,7 @@ function checkStaffClock(clockIn, clockOut) {
 
   // console.log(now);
   // now.setUTCHours(10);
-  const currentHours = (now.getHours() + 1) * 100;
+  let currentHours = now.getHours() * 100;
 
   const currentMinute = now.getMinutes();
   const currentTime = currentHours + currentMinute;
@@ -67,18 +67,21 @@ function checkStaffClock(clockIn, clockOut) {
   const IntclockOut = +clockOut.join('');
   const nextDay = IntclockOut < IntclockIn;
 
-  // CHECK FOR BEFORE SHIFT
-  // if (currentTime < IntclockIn) {
-  //   return false;
-  // }
+  console.log(currentTime);
 
-  // check if the shift extends to the next day
+  if (currentTime)
+    if (!nextDay) {
+      // CHECK FOR BEFORE SHIFT
+      // if (currentTime < IntclockIn) {
+      //   return false;
+      // }
 
-  if (!nextDay) {
-    if (currentTime < IntclockIn || currentTime > IntclockOut) {
-      return false;
+      // check if the shift extends to the next day
+
+      if (currentTime < IntclockIn || currentTime > IntclockOut) {
+        return false;
+      }
     }
-  }
 
   //  If the shift extends to the next day
   if (nextDay) {
