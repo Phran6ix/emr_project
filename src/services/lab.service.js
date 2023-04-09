@@ -52,7 +52,7 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await LabTest.find({ patient: filter })
+      const doc = await LabTest.find({ patient: filter, concluded: false })
         .populate({ path: 'patient', select: '-__v ' })
         .populate({ path: 'doctor', select: '-__v -password' })
         .populate({
