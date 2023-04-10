@@ -143,7 +143,7 @@ module.exports = class TestService {
       if (concludetest.completed) {
         throw new X('This test has already been concluded', 400);
       }
-      console.log(concludetest);
+
       return concludetest;
     } catch (error) {
       throw error;
