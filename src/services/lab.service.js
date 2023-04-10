@@ -1,7 +1,8 @@
-const { findByIdAndDelete } = require('../database/models/lab-test.model');
 const LabTest = require('../database/models/lab-test.model');
 const Inventory = require('../database/models/inventory.model');
 const Session = require('../database/models/patient-session.model');
+const Queue = require('../database/models/queue.model');
+
 const X = require('../exceptions/operational.exception');
 
 module.exports = class TestService {
@@ -163,9 +164,13 @@ module.exports = class TestService {
       if (!concludetest) {
         throw new X('This test does not exist, check the id', 404);
       }
-      if (concludetest.completed) {
-        throw new X('This test has already been concluded', 400);
-      }
+
+      const queue = await Queue.findOne({ session: concludetest.sessionID });
+      queue.attendedTo = true;
+      await queue.save();
+      // if (concludetest.completed) {
+      //   throw new X('This test has already been concluded', 400);
+      // }
 
       return concludetest;
     } catch (error) {

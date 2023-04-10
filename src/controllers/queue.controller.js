@@ -19,6 +19,7 @@ module.exports = class QueueController {
     try {
       const queue = await QueueService.getDoctorsPatient({
         doctor: req.user.id,
+        attendedTo: false,
       });
 
       serverResponse(res, 200, queue);
@@ -32,6 +33,7 @@ module.exports = class QueueController {
       const queue = await QueueService.getADoctorsPatient({
         patient: req.params.id,
         doctor: req.user.id,
+        attendedTo: false,
       });
 
       serverResponse(res, 200, queue);
