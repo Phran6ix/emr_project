@@ -23,7 +23,11 @@ module.exports = class TestService {
 
   static async getAllPendingTests() {
     try {
-      const doc = await LabTest.find({ paid: true, concluded: false })
+      const doc = await LabTest.find({
+        paid: true,
+        concluded: false,
+        completed: false,
+      })
         .populate({ path: 'patient', select: '-__v ' })
         .populate({ path: 'doctor', select: '-__v -password' })
         .populate({
@@ -52,7 +56,11 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await LabTest.find({ patient: filter, concluded: false })
+      const doc = await LabTest.find({
+        patient: filter,
+        concluded: false,
+        completed: false,
+      })
         .populate({ path: 'patient', select: '-__v ' })
         .populate({ path: 'doctor', select: '-__v -password' })
         .populate({
@@ -119,6 +127,24 @@ module.exports = class TestService {
         session,
         lab: docs,
       };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async concludeATest(id) {
+    try {
+      const concludetest = await LabTest.findByIdAndUpdate(id, {
+        completed: true,
+      });
+      if (!concludetest) {
+        throw new X('This test does not exist, check the id', 404);
+      }
+      if (concludetest.completed) {
+        throw new X('This test has already been concluded', 400);
+      }
+      console.log(concludetest);
+      return concludetest;
     } catch (error) {
       throw error;
     }

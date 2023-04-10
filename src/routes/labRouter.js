@@ -8,12 +8,14 @@ const {
   HTTPGetAPendingTest,
   HTTPdeleteATest,
   HTTPGetLabSession,
+  HTTPConcludeTest,
 } = new LabController();
 
 labRouter.use(AuthService.protectRoute);
 
 labRouter.post('/create', HTTPCreateTest);
 labRouter.get('/pending-test', HTTPGetPendingTests);
+labRouter.patch('/conclude-test', HTTPConcludeTest);
 labRouter.get('/pending-test/:id', HTTPGetAPendingTest);
 labRouter.patch('/upload-result/:id', HTTPUploadResult);
 labRouter.delete('/delete-test/:id', HTTPdeleteATest);

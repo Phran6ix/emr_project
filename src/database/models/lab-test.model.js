@@ -44,6 +44,10 @@ const TestSchema = Mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = Mongoose.model('Lab', TestSchema);
