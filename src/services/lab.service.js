@@ -132,6 +132,29 @@ module.exports = class TestService {
     }
   }
 
+  static async getConcludedTests() {
+    try {
+      const tests = await LabTest.find({ concluded: true, completed: false })
+        .populate({
+          path: 'test',
+          select: '-__v',
+        })
+        .populate({
+          path: 'doctor',
+          select: 'fullName role ',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name ',
+        })
+        .select('-__v');
+      console.log(tests);
+      return tests;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async concludeATest(id) {
     try {
       const concludetest = await LabTest.findByIdAndUpdate(id, {

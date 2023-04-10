@@ -42,6 +42,14 @@ module.exports = class LabController {
     }
   }
 
+  async HTTPGetConcludedTest(req, res, next) {
+    try {
+      const tests = await LabService.getConcludedTests();
+      return serverResponse(res, 200, tests);
+    } catch (error) {
+      next(error);
+    }
+  }
   async HTTPdeleteATest(req, res, next) {
     try {
       await LabService.deleteTest(req.params.id);
