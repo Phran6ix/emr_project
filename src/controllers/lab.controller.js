@@ -44,7 +44,7 @@ module.exports = class LabController {
 
   async HTTPGetConcludedTest(req, res, next) {
     try {
-      const tests = await LabService.getConcludedTests();
+      const tests = await LabService.getConcludedTests(req.user.id);
       return serverResponse(res, 200, tests);
     } catch (error) {
       next(error);

@@ -133,24 +133,33 @@ module.exports = class TestService {
     }
   }
 
-  static async getConcludedTests() {
+  static async getConcludedTests(doctor) {
     try {
-      const tests = await LabTest.find({ concluded: true, completed: false })
-        .populate({
-          path: 'test',
-          select: '-__v',
-        })
-        .populate({
-          path: 'doctor',
-          select: 'fullName role ',
-        })
+      const tests = await LabTest.find({
+        doctor,
+        concluded: true,
+        completed: false,
+      })
         .populate({
           path: 'patient',
           select: 'name ',
         })
         .select('-__v');
-      console.log(tests);
-      return tests;
+
+      const patient = tests.map((document) => {
+        return { ...document.patient._doc };
+      });
+
+      const filterPatient = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return filterPatient;
     } catch (error) {
       throw error;
     }
