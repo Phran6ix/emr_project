@@ -147,7 +147,11 @@ module.exports = class TestService {
         .select('-__v');
 
       const patient = tests.map((document) => {
-        return { ...document.patient._doc };
+        return {
+          ...document.patient._doc,
+          testId: document.id,
+          session: document.sessionID,
+        };
       });
 
       const filterPatient = patient.filter((item, index) => {
