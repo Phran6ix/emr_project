@@ -144,12 +144,14 @@ module.exports = class TestService {
           path: 'patient',
           select: 'name ',
         })
+        .populate({
+          path: 'test',
+        })
         .select('-__v');
 
       const patient = tests.map((document) => {
         return {
           ...document.patient._doc,
-          testId: document.id,
           session: document.sessionID,
         };
       });
@@ -163,6 +165,15 @@ module.exports = class TestService {
         );
       });
 
+      const testdata = tests.map((document) => {
+        return {
+          ...document.test._doc,
+          result: document.result,
+        };
+      });
+
+      // filterPatient.push(testdata);
+
       return filterPatient;
     } catch (error) {
       throw error;
@@ -171,14 +182,22 @@ module.exports = class TestService {
 
   static async concludeATest(id) {
     try {
-      const concludetest = await LabTest.findByIdAndUpdate(id, {
-        completed: true,
-      });
-      if (!concludetest) {
+      const concludetest = await LabTest.find({ sessionID: id });
+
+      if (concludetest.length < 1) {
         throw new X('This test does not exist, check the id', 404);
       }
 
-      const queue = await Queue.findOne({ session: concludetest.sessionID });
+      concludetest.forEach(async (document) => {
+        document.completed = true;
+        await document.save();
+        return;
+      });
+
+      const queue = await Queue.findOne({ session: concludetest[0].sessionID });
+      if (!queue) {
+        throw new X('error occured', 400);
+      }
       queue.attendedTo = true;
       await queue.save();
       // if (concludetest.completed) {

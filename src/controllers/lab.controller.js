@@ -70,7 +70,7 @@ module.exports = class LabController {
 
   async HTTPConcludeTest(req, res, next) {
     try {
-      const conclude = await LabService.concludeATest(req.query.test);
+      const conclude = await LabService.concludeATest(req.query.session);
       return serverResponse(res, 200, {
         message: 'Test concluded succesfully',
       });
