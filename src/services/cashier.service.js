@@ -9,7 +9,7 @@ module.exports = class CashierService {
     try {
       const labPatient = new Promise((res) => {
         res(
-          Lab.find({ paid: false, concluded: false })
+          Lab.find({ paid: false })
             .populate({
               path: 'doctor',
               select: 'fullName _id',
@@ -20,7 +20,7 @@ module.exports = class CashierService {
 
       const xrayPatient = new Promise((res) => {
         res(
-          Xray.find({ paid: false, concluded: false })
+          Xray.find({ paid: false })
             .populate({
               path: 'doctor',
               select: 'fullName _id',
@@ -31,7 +31,7 @@ module.exports = class CashierService {
 
       const prescription = new Promise((res) => {
         res(
-          Prescription.find({ paid: false, dispersed: false })
+          Prescription.find({ paid: false })
             .populate({
               path: 'doctor',
               select: 'fullName _id',
