@@ -77,34 +77,28 @@ module.exports = class CashierService {
     try {
       const labPatient = new Promise((res) => {
         res(
-          Lab.find({ paid: false, doctor: doctorId })
-            .populate({
-              path: 'patient',
-              select: 'name _id',
-            })
-            .select('doctor sessionID')
+          Lab.find({ paid: false, doctor: doctorId }).populate({
+            path: 'patient',
+            select: 'name _id',
+          })
         );
       });
 
       const xrayPatient = new Promise((res) => {
         res(
-          Xray.find({ paid: false, doctor: doctorId })
-            .populate({
-              path: 'patient',
-              select: 'name _id',
-            })
-            .select('doctor sessionID')
+          Xray.find({ paid: false, doctor: doctorId }).populate({
+            path: 'patient',
+            select: 'name _id',
+          })
         );
       });
 
       const prescription = new Promise((res) => {
         res(
-          Prescription.find({ paid: false, doctor: doctorId })
-            .populate({
-              path: 'patient',
-              select: 'name _id',
-            })
-            .select('doctor sessionID')
+          Prescription.find({ paid: false, doctor: doctorId }).populate({
+            path: 'patient',
+            select: 'name _id',
+          })
         );
       });
 
@@ -123,7 +117,6 @@ module.exports = class CashierService {
       let patient;
 
       patient = patientArray.map((patient) => {
-        console.log('e');
         return { ...patient.patient._doc, session: patient.sessionID };
       });
 

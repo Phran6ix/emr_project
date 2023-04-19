@@ -15,6 +15,17 @@ module.exports = class QueueController {
     }
   }
 
+  async HTTPRemovePatientList(req, res, next) {
+    try {
+      const response = await QueueService.removePatientFromList(
+        req.query.session
+      );
+      serverResponse(res, 204, {});
+    } catch (error) {
+      next(error);
+    }
+  }
+
   async HTTPgetDoctorsPatient(req, res, next) {
     try {
       const queue = await QueueService.getDoctorsPatient({

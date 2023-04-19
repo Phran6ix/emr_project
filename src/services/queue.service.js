@@ -16,6 +16,21 @@ module.exports = class QueueService {
       throw error;
     }
   }
+
+  static async removePatientFromList(sessionId) {
+    try {
+      const doc = await Queue.findOneAndDelete({ session: sessionId });
+      // const session = await Session.findByIdAndDelete(sessionId);
+
+      if (!doc) {
+        throw new X('Document not found', 404);
+      }
+      return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
   static async getDoctorsPatient(query) {
     try {
       const doc = await Queue.find(query)
