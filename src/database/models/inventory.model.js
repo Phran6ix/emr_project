@@ -18,7 +18,7 @@ const InventorySchema = Mongoose.Schema({
 
   type: {
     type: String,
-    enum: ['drug', 'test'],
+    enum: ['drug', 'test', 'x-ray'],
   },
 });
 
