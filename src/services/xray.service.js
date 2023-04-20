@@ -1,10 +1,18 @@
 const { findByIdAndDelete } = require('../database/models/lab-test.model');
 const X_Ray = require('../database/models/xray.model');
+const Inventory = require('../database/models/inventory.model');
+const Session = require('../database/models/patient-session.model');
+const Queue = require('../database/models/queue.model');
 const X = require('../exceptions/operational.exception');
 
 module.exports = class TestService {
   static async createTest(payload) {
     try {
+      const test = await Inventory.findById(payload.test);
+      if (test.quantity < 1) {
+        throw new X('Out of Stock', 400);
+      }
+
       const doc = await X_Ray.create(payload);
       return doc;
     } catch (err) {
@@ -14,15 +22,32 @@ module.exports = class TestService {
 
   static async getAllPendingTests() {
     try {
-      const doc = await X_Ray.find({ paid: true, concluded: false })
-        .populate({ path: 'patient', select: 'name dob PID' })
-        .populate({ path: 'doctor', select: 'fullName role' })
+      const doc = await X_Ray.find({
+        paid: true,
+        concluded: false,
+        completed: false,
+      })
+        .populate({ path: 'patient', select: '-__v' })
+        .populate({ path: 'doctor', select: '-__v -password' })
         .populate({
           path: 'test',
           select: '-__v',
         });
 
-      return doc;
+      const patient = doc.map((document) => {
+        return { ...document.patient._doc };
+      });
+
+      const filterPatient = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return filterPatient;
     } catch (err) {
       throw err;
     }
@@ -30,24 +55,30 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await X_Ray.findById(filter)
-        .populate('patient', 'name dob PID')
-        .populate('doctor', 'fullName role ')
+      const doc = await X_Ray.findById({
+        patient: filter,
+        concluded: false,
+        completed: false,
+      })
+        .populate({ path: 'patient', select: '-__v ' })
+        .populate({ path: 'doctor', select: '-__v -password' })
         .populate({
           path: 'test',
-          select: '-__v',
+          select: '-__v -_id',
         });
       if (!doc) {
         return new X('Not found', 404);
       }
-      return doc;
     } catch (error) {
       throw error;
     }
   }
   static async uploadResult(filter, payload) {
     try {
-      const test = await X_Ray.findOneAndUpdate(filter, payload);
+      const test = await X_Ray.findByIdAndUpdate(filter, payload);
+      if (!test) {
+        throw new X('Document not found', 404);
+      }
       return test;
     } catch (err) {
       throw err;
@@ -80,6 +111,14 @@ module.exports = class TestService {
           path: 'test',
           select: '-__v',
         })
+        .populate({
+          path: 'doctor',
+          select: 'fullName role ',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name ',
+        })
         .select('-__v');
 
       if (!docs || !session) {
@@ -89,6 +128,73 @@ module.exports = class TestService {
         session,
         lab: docs,
       };
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async getConcludedTests(doctor) {
+    try {
+      const tests = await X_Ray.find({
+        doctor,
+        concluded: true,
+        completed: false,
+      })
+        .populate({
+          path: 'doctor',
+          select: 'fullName role ',
+        })
+        .populate({
+          path: 'patient',
+          select: 'name ',
+        })
+        .select('-__v');
+
+      const patient = tests.map((document) => {
+        return {
+          ...document.patient._doc,
+          session: document.sessionID,
+        };
+      });
+
+      const filterPatient = patient.filter((item, index) => {
+        return (
+          index ===
+          patient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+
+      return filterPatient;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async completeATest(sessionID) {
+    try {
+      const concludedTest = await X_Ray.find({ sessionID });
+
+      if (concludedTest.length < 1) {
+        throw new X('Tests does not exists in this session', 404);
+      }
+
+      concludedTest.forEach(async (test) => {
+        test.completed = true;
+        await test.save();
+      });
+
+      const queue = await Queue.findOne({
+        session: concludedTest[0].sessionID,
+      });
+      if (!queue) {
+        throw new X('An Error occured', 400);
+      }
+      queue.attendedTo = true;
+      await queue.save();
+
+      return concludedTest;
     } catch (error) {
       throw error;
     }

@@ -7,12 +7,19 @@ const {
   HTTPUploadResult,
   HTTPGetAPendingTest,
   HTTPdeleteATest,
+  HTTPConcludeATest,
+  HTTPGetConcludedTest,
+  HTTPGetXraySession,
 } = new XRayController();
 
 XrayRouter.use(AuthService.protectRoute);
 
 XrayRouter.post('/create', HTTPCreateTest);
 XrayRouter.get('/pending-test', HTTPGetPendingTests);
+XrayRouter.get('/done-tests', HTTPGetConcludedTest);
+XrayRouter.patch('/conclude-test', HTTPConcludeATest);
+
+XrayRouter.get('/session/:id', HTTPGetXraySession);
 XrayRouter.get('/pending-test/:id', HTTPGetAPendingTest);
 XrayRouter.patch('/upload-result/:id', HTTPUploadResult);
 XrayRouter.delete('/delete-test/:id', HTTPdeleteATest);

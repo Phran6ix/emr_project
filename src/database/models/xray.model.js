@@ -23,8 +23,17 @@ const XRaySchema = Mongoose.Schema({
     ref: 'Inventory',
   },
 
-  result: {
+  description: {
     type: String,
+  },
+
+  result: {
+    result: {
+      type: String,
+    },
+    description: {
+      type: String,
+    },
   },
 
   concluded: {
@@ -32,6 +41,10 @@ const XRaySchema = Mongoose.Schema({
     default: false,
   },
   paid: {
+    type: Boolean,
+    default: false,
+  },
+  completed: {
     type: Boolean,
     default: false,
   },

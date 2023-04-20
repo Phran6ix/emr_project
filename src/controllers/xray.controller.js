@@ -31,10 +31,10 @@ module.exports = class LabController {
 
   async HTTPUploadResult(req, res, next) {
     try {
-      const response = await XRayService.uploadResult(
-        { id: req.params.id },
-        { result: req.body.result, concluded: true }
-      );
+      const response = await XRayService.uploadResult(req.params.id, {
+        result: req.body.result,
+        concluded: true,
+      });
       serverResponse(res, 200, { message: 'Upload Successful' });
     } catch (error) {
       next(error);
@@ -45,6 +45,35 @@ module.exports = class LabController {
     try {
       await XRayService.deleteTest(req.params.id);
       serverResponse(res, 204, '');
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HTTPGetXraySession(req, res, next) {
+    try {
+      const Test = await XRayService.getXraySession(req.params.id);
+      return serverResponse(res, 200, Test);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HTTPGetConcludedTest(req, res, next) {
+    try {
+      const tests = await XRayService.getConcludedTests(req.user.id);
+      return serverResponse(res, 200, tests);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async HTTPConcludeATest(req, res, next) {
+    try {
+      const conclude = await XRayService.completeATest(req.query.session);
+      return serverResponse(res, 200, {
+        message: 'Test concluded successfully',
+      });
     } catch (error) {
       next(error);
     }

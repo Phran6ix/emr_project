@@ -185,7 +185,7 @@ module.exports = class TestService {
       const concludetest = await LabTest.find({ sessionID: id });
 
       if (concludetest.length < 1) {
-        throw new X('This test does not exist, check the id', 404);
+        throw new X('This test does not exist in this session', 404);
       }
 
       concludetest.forEach(async (document) => {
