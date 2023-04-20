@@ -73,6 +73,7 @@ module.exports = class TestService {
       if (!doc) {
         return new X('Not found', 404);
       }
+      return doc;
     } catch (error) {
       throw error;
     }
