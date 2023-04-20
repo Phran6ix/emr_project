@@ -59,7 +59,7 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await X_Ray.findById({
+      const doc = await X_Ray.findOne({
         patient: filter,
         concluded: false,
         completed: false,
