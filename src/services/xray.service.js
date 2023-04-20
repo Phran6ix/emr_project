@@ -35,7 +35,11 @@ module.exports = class TestService {
         });
 
       const patient = doc.map((document) => {
-        return { ...document.patient._doc };
+        console.log(document);
+        return {
+          patient: { ...document.patient._doc },
+          session: document.sessionID,
+        };
       });
 
       const filterPatient = patient.filter((item, index) => {
