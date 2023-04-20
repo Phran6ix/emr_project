@@ -59,7 +59,7 @@ module.exports = class TestService {
 
   static async getAPendingTest(filter) {
     try {
-      const doc = await X_Ray.findOne({
+      const doc = await X_Ray.find({
         patient: filter,
         concluded: false,
         completed: false,
@@ -70,7 +70,7 @@ module.exports = class TestService {
           path: 'test',
           select: '-__v -_id',
         });
-      if (!doc) {
+      if (doc.length < 1) {
         return new X('Not found', 404);
       }
       return doc;
