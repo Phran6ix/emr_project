@@ -10,4 +10,13 @@ module.exports = class HistoryController {
       next(error);
     }
   }
+
+  async HTTPGetHistoryWithPID(req, res, next) {
+    try {
+      const history = await HistoryService.getHistoryWithPID(req.query.patient);
+      return serverResponse(res, 200, history);
+    } catch (error) {
+      next(error);
+    }
+  }
 };
