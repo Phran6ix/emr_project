@@ -8,10 +8,24 @@ const X_ray = require('../database/models/xray.model');
 
 const X = require('../exceptions/operational.exception');
 
-async function getHistory(filter) {
+async function getHistory(type, filter) {
+  let testquery;
+  let symptomquery;
+  let prescriptionquery;
+
+  if (type == 'PID') {
+    testquery = { concluded: true, patient: filter };
+    symptomquery = { patient: filter };
+    prescriptionquery = { dispersed: true, patient: filter };
+  } else if (type == 'session') {
+    testquery = { concluded: true, sessionID: filter };
+    symptomquery = { sessionID: filter };
+    prescriptionquery = { dispersed: true, sessionID: filter };
+  }
+
   const labs = new Promise((res) => {
     res(
-      Lab.find({ concluded: true, filter })
+      Lab.find(testquery)
         .populate({
           path: 'doctor',
           select: 'fullName role',
@@ -28,7 +42,7 @@ async function getHistory(filter) {
   });
   const xrays = new Promise((res) => {
     res(
-      X_ray.find({ concluded: true, filter })
+      X_ray.find(testquery)
         .populate({
           path: 'doctor',
           select: 'fullName role',
@@ -46,7 +60,7 @@ async function getHistory(filter) {
 
   const symptoms = new Promise((res) => {
     res(
-      Symptom.find({ filter })
+      Symptom.find(symptomquery)
         .populate({
           path: 'doctor',
           select: 'fullName role',
@@ -63,7 +77,7 @@ async function getHistory(filter) {
 
   const prescription = new Promise((res) => {
     res(
-      Prescription.find({ filter, dispersed: true })
+      Prescription.find(prescriptionquery)
         .populate({
           path: 'doctor',
           select: 'fullName role',
@@ -81,7 +95,7 @@ async function getHistory(filter) {
 
   const diagnosis = new Promise((res) => {
     res(
-      Diagnosis.find({ filter })
+      Diagnosis.find(symptomquery)
         .populate({
           path: 'patient',
           select: 'name dob PID',
@@ -127,7 +141,8 @@ async function getHistory(filter) {
 class HistoryService {
   static async getPatientHistory(sessionID) {
     try {
-      const history = await getHistory(sessionID);
+      const history = await getHistory('session', sessionID);
+      return history;
     } catch (error) {
       throw error;
     }
@@ -138,7 +153,8 @@ class HistoryService {
       if (!patient) {
         throw new X('Patient with this patient number not found', 404);
       }
-      const history = await getHistory(patient);
+
+      const history = await getHistory('PID', patient.id);
       return history;
     } catch (error) {
       throw error;
