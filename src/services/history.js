@@ -89,7 +89,7 @@ async function getHistory(type, filter) {
         .populate({
           path: 'drugId',
         })
-        .select('title description paid doctor patient quantity')
+        .select('__v -id')
     );
   });
 
