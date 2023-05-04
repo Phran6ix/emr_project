@@ -37,7 +37,7 @@ async function getHistory(type, filter) {
         .populate({
           path: 'test',
         })
-        .select('title description paid doctor patient')
+        .select('-_id -__v')
     );
   });
   const xrays = new Promise((res) => {
@@ -54,7 +54,7 @@ async function getHistory(type, filter) {
         .populate({
           path: 'test',
         })
-        .select('title description paid doctor patient')
+        .select('-_id -__v')
     );
   });
 
@@ -89,7 +89,7 @@ async function getHistory(type, filter) {
         .populate({
           path: 'drugId',
         })
-        .select('__v -id')
+        .select('title description paid doctor patient quantity')
     );
   });
 
