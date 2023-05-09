@@ -155,7 +155,34 @@ class HistoryService {
       }
 
       const history = await getHistory('PID', patient.id);
-      return history;
+
+      const patientArray = [
+        ...history.prescription,
+        ...history.diagnosis,
+        ...history.symptoms,
+        ...history.tests,
+        ...history.xrays,
+      ];
+
+      let returnPatient;
+
+      returnPatient = patientArray.map((patient) => {
+        return {
+          session: patient.sessionID,
+        };
+      });
+
+      const uniqueData = returnPatient.filter((item, index) => {
+        return (
+          index ===
+          returnPatient.findIndex((obj) => {
+            return JSON.stringify(obj) === JSON.stringify(item);
+          })
+        );
+      });
+      let session = [];
+      uniqueData.forEach((eachsession) => session.push(eachsession.session));
+      return { session };
     } catch (error) {
       throw error;
     }
