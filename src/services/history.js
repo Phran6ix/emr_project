@@ -167,9 +167,7 @@ class HistoryService {
       let returnPatient;
 
       returnPatient = patientArray.map((patient) => {
-        return {
-          session: patient.sessionID,
-        };
+        return patient.sessionID;
       });
 
       const uniqueData = returnPatient.filter((item, index) => {
@@ -180,9 +178,21 @@ class HistoryService {
           })
         );
       });
-      let session = [];
-      uniqueData.forEach((eachsession) => session.push(eachsession.session));
-      return { session };
+
+      let sessionData = [];
+
+      await Promise.all(
+        uniqueData.map(async (session) => {
+          const userdata = await Session.findOne(
+            { _id: session },
+            { patient: false, status: false }
+          );
+
+          sessionData.push(userdata);
+        })
+      );
+
+      return { session: sessionData };
     } catch (error) {
       throw error;
     }
