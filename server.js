@@ -51,7 +51,7 @@ const port = process.env.PORT || 5000;
 
 async function Bootstrap() {
   const con = await connectDb();
-  await clearDB();
+  // await clearDB();
 
   server.listen(port, () => {
     console.log(
