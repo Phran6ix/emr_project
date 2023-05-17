@@ -18,40 +18,39 @@ const xray = require('./src/database/models/xray.model');
 
 const connectDb = require('./src/database/connections/connection');
 
-async function clearDB() {
-  await Staff.deleteMany();
-  await Bio.deleteMany();
-  await Dia.deleteMany();
-  await DiaN.deleteMany();
-  await Inv.deleteMany();
-  await lab.deleteMany();
-  await Sess.deleteMany();
-  await Synm.deleteMany();
-  await Pati.deleteMany();
-  await Pres.deleteMany();
-  await Que.deleteMany();
-  await Test.deleteMany();
-  await Sympt.deleteMany();
-  await xray.deleteMany();
+// async function clearDB() {
+//   await Staff.deleteMany();
+//   await Bio.deleteMany();
+//   await Dia.deleteMany();
+//   await DiaN.deleteMany();
+//   await Inv.deleteMany();
+//   await lab.deleteMany();
+//   await Sess.deleteMany();
+//   await Synm.deleteMany();
+//   await Pati.deleteMany();
+//   await Pres.deleteMany();
+//   await Que.deleteMany();
+//   await Test.deleteMany();
+//   await Sympt.deleteMany();
+//   await xray.deleteMany();
 
-  await Staff.create({
-    username: 'mainadmin',
-    password: 'admin001',
-    role: 'admin',
-    fullName: 'Main Admin',
-    clockIn: '00:00',
-    clockOut: '23:59',
-  });
+//   await Staff.create({
+//     username: 'mainadmin',
+//     password: 'admin001',
+//     role: 'admin',
+//     fullName: 'Main Admin',
+//     clockIn: '00:00',
+//     clockOut: '23:59',
+//   });
 
-  console.log('All DONE');
-}
+//   console.log('All DONE');
+// }
 
 const server = http.createServer(App);
 const port = process.env.PORT || 5000;
 
 async function Bootstrap() {
   const con = await connectDb();
-  // await clearDB();
 
   server.listen(port, () => {
     console.log(
